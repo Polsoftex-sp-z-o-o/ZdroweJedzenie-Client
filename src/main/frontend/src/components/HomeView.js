@@ -1,5 +1,7 @@
 import React from 'react';
 import client from '../api/client';
+//import productsMock from '../utils/productsMock'
+
 
 class  HomeView  extends React.Component {
     constructor(props) {
@@ -11,6 +13,8 @@ class  HomeView  extends React.Component {
       }
     
       componentDidMount() {
+        //var mock = new productsMock();
+        //console.log(mock.getProductById(1));
         this.getQuoteOfTheDay();
       }
     

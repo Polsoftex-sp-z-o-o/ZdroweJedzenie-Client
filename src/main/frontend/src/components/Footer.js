@@ -8,7 +8,7 @@ class Footer extends React.Component {
           <span className="text-muted">
             @Polsoftex - Programowanie Zespołowe 2021-{" "}
             <a href="mailto:admin@polsoftex.pl">
-                mailto:admin@polsoftex.pl
+                admin@polsoftex.pl
             </a>
           </span>
         </div>

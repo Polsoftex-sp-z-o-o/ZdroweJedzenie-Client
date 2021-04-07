@@ -1,17 +1,20 @@
 import client from "../api/client"
 
-class usersMock {
-    usersMockGateway = "https://virtserver.swaggerhub.com/Atloas/ZdroweJedzenieAPIGateway/0.1.1/users";
-    
-    getUserById(id) {
+class cartMock {
+    cartMockGateway = "https://virtserver.swaggerhub.com/Atloas/ZdroweJedzenieAPIGateway/0.1.1/cart";
+
+    getCart() {
         return client({
             method: "GET",
-            path: this.usersMockGateway + "/" + id,
+            path: this.cartMockGateway,
             headers: { Accept: "application/json" },
           }).then((response) => {
             return response;
           });
     }
+    
 }
 
-export default usersMock;
+
+
+export default cartMock;
