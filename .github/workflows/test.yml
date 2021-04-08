@@ -1,0 +1,13 @@
+name: Test
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # TODO: TEST if this pulls the action
+      - uses: Polsoftex-sp-z-o-o/Actions/test@main
