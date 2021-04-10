@@ -12,7 +12,7 @@ class Logo extends React.Component {
     render() {
         return (
             <div class="logo_and_text">
-                <img class="logo_image" src={temp_logo}></img>
+                <img class="logo_image" src={temp_logo} alt="zdrowe jedzenie logo"></img>
                 <p class="text_below_logo">{this.state.text}</p>
             </div>
         );
