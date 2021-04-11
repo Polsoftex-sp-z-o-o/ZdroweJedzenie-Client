@@ -11,8 +11,8 @@ jobs:
       
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
-#         with:
+        with:
 #           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
-#           node-version: # optional
+          node-version: '14' # optional
 
       - uses: Polsoftex-sp-z-o-o/Actions/test@main
