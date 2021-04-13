@@ -1,0 +1,77 @@
+name: Deploy
+
+env:
+  APP_NAME: "zdrowejedzenie-client"
+  REGISTRY_NAME: "polsoftex"
+  CLUSTER_RESOURCE_GROUP: "polsoftex"
+  CLUSTER_NAME: "polCluster"
+  IMAGE_PULL_SECRET: "zdrowejedzenie-secret"
+  MANIFEST: 'manifests/deployment.yml'
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@main
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Log in to Azure CR'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: 'Build and push image'
+        run: |
+          chmod +x gradlew
+          ./gradlew bootBuildImage --imageName "${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:latest"
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:latest
+
+      # Set the target Azure Kubernetes Service (AKS) cluster.
+      - name: 'Set target AKS'
+        uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+        # Create namespace if doesn't exist
+      #         - run: |
+      #            kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+
+      #         # Create image pull secret for ACR
+      #         - uses: azure/k8s-create-secret@v1
+      #           with:
+      #             container-registry-url: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      #             container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+      #             container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+      #             secret-name: ${{ env.IMAGE_PULL_SECRET }}
+      #             namespace: ${{ env.NAMESPACE }}
+      #             force: true
+
+      # Deploy app to AKS
+      - name: 'Deploy to AKS'
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            ${{ env.MANIFEST }}
+          images: |
+            ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:latest
+          imagepullsecrets: |
+            ${{ env.IMAGE_PULL_SECRET }}
+      #             namespace: ${{ env.NAMESPACE }}
+
+      - name: 'Restart pods'
+        run: kubectl rollout restart deployment ${{ env.APP_NAME }}
+
