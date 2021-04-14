@@ -46,6 +46,7 @@ metadata:
   name: zdrowejedzenie-client
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io
