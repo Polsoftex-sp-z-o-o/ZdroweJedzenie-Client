@@ -20,6 +20,12 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@main
 
+      - name: 'Validate manifest'
+        uses: azure/k8s-lint@v1
+        with:
+          manifests: |
+            manifests/deployment.yml
+
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
