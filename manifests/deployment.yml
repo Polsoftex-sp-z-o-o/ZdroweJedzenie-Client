@@ -59,6 +59,6 @@ spec:
           - backend:
               serviceName: zdrowejedzenie-gateway
               servicePort: 8080
-            path: /config/(.+)
+            path: /gateway/(.+)
 #            /gateway(/|$)(.*)
 
