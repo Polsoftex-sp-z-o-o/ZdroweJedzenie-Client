@@ -48,10 +48,15 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-    - host: zdrowejedzenie-client.bcb17b143e9244b5a03d.eastus.aksapp.io
+    - host: zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io
       http:
         paths:
           - backend:
               serviceName: zdrowejedzenie-client
               servicePort: 8080
             path: /
+          - backend:
+              serviceName: zdrowejedzenie-gateway
+              servicePort: 8080
+            path: /gateway/
+
