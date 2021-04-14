@@ -6,6 +6,7 @@ import Navigation from './Navigation'
 import HomeView from './HomeView'
 import RegisterView from './RegisterView'
 import LoginView from './LoginView'
+import ProductsView from './ProductView'
 
 class  App  extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class  App  extends React.Component {
               <Route path="/" exact component={HomeView} />
               <Route path="/register" exact component={RegisterView} />
               <Route path="/login" exact component={LoginView} />
-
+              <Route path="/products" exact component={ProductsView} />
             </Switch>
           </div>
           <Footer />
