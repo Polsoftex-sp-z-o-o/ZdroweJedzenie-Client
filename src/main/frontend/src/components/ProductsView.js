@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-
+import Search from './Search';
 import Product from './Product';
 
 class ProductsView extends React.Component {
@@ -13,7 +13,10 @@ class ProductsView extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.mocked_products = [{ name: "Masło", price: "15$", description: "Pyszne i tłuste." },
     { name: "Jabłka Champion", price: "10 $/kg", description: "Twarde ale słodiutkie." },
+    { name: "Jabłka Zwykłe", price: "9 $/kg", description: "Twarde i kwaśne." },
     { name: "Ksylitol", price: "420 $/kg", description: "Gdy masz nadmiar cukru bo jesteś zbyt słodki." }];
+
+    this.searchHandler = this.searchHandler.bind(this);
   }
 
   handleInput(e) {
@@ -49,6 +52,12 @@ class ProductsView extends React.Component {
     this.props.onNavigate(this.props.links.last.href);
   }
 
+  searchHandler(productsToShow) {
+    //alert('tested');
+    this.mocked_products = productsToShow;
+    this.forceUpdate();
+  }
+
   render() {
     const products = this.mocked_products.map((product) => (
       <Product
@@ -61,6 +70,7 @@ class ProductsView extends React.Component {
 
     return (
       <div>
+        <Search parentHandler={this.searchHandler} products={this.mocked_products}/>
         <div className="row">
           <div className="col-lg-9">
             <div className="row">
