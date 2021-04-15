@@ -65,7 +65,7 @@ class Navigation extends React.Component {
                   className="fas fa-seedling"
                   style={{ margin: "0px 10px 0px 10px" }}
                 ></i>
-                Library
+                Zdrowe Jedzenie
               </span>
             </Link>
             <button

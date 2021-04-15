@@ -6,16 +6,9 @@ import Navigation from './Navigation'
 import HomeView from './HomeView'
 import RegisterView from './RegisterView'
 import LoginView from './LoginView'
-import ProductsView from './ProductView'
+import ProductsView from './ProductsView'
 
 class  App  extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      quote: "Cytat na dziś, który jest bardzo mądry.",
-      author: "Mądra osoba",
-    };
-  }
   render() {
     return (
       <Router>
