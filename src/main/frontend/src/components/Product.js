@@ -49,10 +49,10 @@ class Product extends React.Component {
     return (
       <div className="col-lg-4 col-md-6 mb-4">
         <div className="card h-100">
-          <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt="" /></a>
+          <span><img className="card-img-top" src="http://placehold.it/700x400" alt="" /></span>
           <div className="card-body">
             <h4 className="card-title">
-              <a href="#"> {this.props.product.name} </a>
+              <h1> {this.props.product.name} </h1>
             </h4>
             <h5> {this.props.product.price}  </h5>
             <p className="card-text"> {this.props.product.description} </p>
