@@ -1,5 +1,4 @@
 import React from 'react';
-import temp_logo from './temp_logo.PNG'
 
 class Logo extends React.Component {
     constructor(props) {
@@ -12,7 +11,7 @@ class Logo extends React.Component {
     render() {
         return (
             <div class="logo_and_text">
-                <img class="logo_image" src={temp_logo} alt="zdrowe jedzenie logo"></img>
+                <img class="logo_image" src={"../../favicon.ico"} alt="Zdrowe Jedzenie logo"></img>
                 <p class="text_below_logo">{this.state.text}</p>
             </div>
         );
@@ -54,7 +53,7 @@ class RegisterView extends React.Component {
         return (
             <div className="container_outer">
                 <div id="left_container_logo" className="container_logo">
-                    <Logo text="Lorem ipsum" />
+                    <Logo text="Zdrowe Jedzenie jest najlepszym w kraju dostawcą pożywienia spełniającego wymagania wymagających smakoszy bedąc przy tym tanią i zdrową alternatywą dla sztucznie hodowanych produktów. Zarejestruj się i żyj zdrowo już dziś!" />
                 </div>
                 <div id="right_container_register" className="container_register">
                     <form className='register_form' onSubmit={this.handleSubmit}>
