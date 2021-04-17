@@ -367,3 +367,46 @@ blockquote {
   font-weight: bold;
   color: rgb(120,180,120)
 }
+
+/* SEARCH COMPONENT */
+.searchBar {
+  width: 100%;
+}
+
+.input-group{
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  display: table;
+  border-collapse: separate
+}
+
+.form-control{
+  display: block;
+  width: 100%;
+  height: 36px;
+  padding: 6px 12px;
+  font-size: 1.6rem;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+}
+
+.input-group .form-control{
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 100%;
+  margin-bottom: 0
+}
+
+.input-group-addon,.input-group-btn,.input-group .form-control{
+  display: table-cell
+}

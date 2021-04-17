@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-
+import Search from './Search';
 import Product from './Product';
 
 class ProductsView extends React.Component {
@@ -11,9 +11,16 @@ class ProductsView extends React.Component {
     this.handleNavNext = this.handleNavNext.bind(this);
     this.handleNavLast = this.handleNavLast.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+
     this.mocked_products = [{ name: "Masło", price: "15$", description: "Pyszne i tłuste." },
     { name: "Jabłka Champion", price: "10 $/kg", description: "Twarde ale słodiutkie." },
+    { name: "Jabłka Zwykłe", price: "9 $/kg", description: "Twarde i kwaśne." },
     { name: "Ksylitol", price: "420 $/kg", description: "Gdy masz nadmiar cukru bo jesteś zbyt słodki." }];
+
+    this.state = {
+      filteredProducts: this.mocked_products
+    }
   }
 
   handleInput(e) {
@@ -49,8 +56,25 @@ class ProductsView extends React.Component {
     this.props.onNavigate(this.props.links.last.href);
   }
 
+  handleSearch(query) {
+    this.setState({
+      filteredProducts: this.filterProducts(query)
+    })
+  }
+
+  filterProducts(query) {
+    if (!query) {
+        return this.mocked_products;
+    }
+
+    return this.mocked_products.filter((product) => {
+        const productName = product.name.toLowerCase();
+        return productName.includes(query);
+    });
+  }
+
   render() {
-    const products = this.mocked_products.map((product) => (
+    const products = this.state.filteredProducts.map((product) => (
       <Product
         product={product}
         onReserve={this.props.onReserve}
@@ -61,6 +85,7 @@ class ProductsView extends React.Component {
 
     return (
       <div>
+        <Search parentHandler={this.handleSearch}/>
         <div className="row">
           <div className="col-lg-9">
             <div className="row">
