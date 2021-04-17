@@ -192,6 +192,11 @@ blockquote {
   }
 }
 
+/* PRODUCT COMPONENT */
+#buyButton {
+  float: right;
+}
+
 /* ACCOUNT VIEW */
 .container_account {
   display: flex;
@@ -220,7 +225,7 @@ blockquote {
   max-height: 30rem;
   border-radius: 8px;
   padding: 2rem 3rem;
-  box-shadow: 0.3rem 0.3rem 1rem rgba(0,0,0,0.1);
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 .login_form__label {
@@ -230,12 +235,13 @@ blockquote {
 }
 
 .login_form__input {
-  border: 0.1rem rgba(0,0,0,0.1) solid;
+  border: 0.1rem rgba(0, 0, 0, 0.1) solid;
   padding: 1rem 2rem;
   border-radius: 8px;
 }
 
-.login_form__input:focus, .login_form__submit:focus {
+.login_form__input:focus,
+.login_form__submit:focus {
   outline: none;
 }
 
@@ -243,15 +249,15 @@ blockquote {
   padding: 1.6rem 3rem;
   border: none;
   border-radius: 8px;
-  background-color: rgb(120,180,120);
+  background-color: rgb(120, 180, 120);
   color: white;
   margin-top: 1.4rem;
 }
 
 .login_form__submit:hover {
   transform: scale(1.01) translateY(-1px);
-  transition: all .2s ease-in;
-  box-shadow: 0.3rem 0.3rem 1rem rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in;
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 .login_form__submit:active {
@@ -266,7 +272,7 @@ blockquote {
 .login_form__info a {
   font-size: 1.4rem;
   font-weight: bold;
-  color: rgb(120,180,120)
+  color: rgb(120, 180, 120);
 }
 
 /* REGISTER VIEW */
@@ -280,7 +286,7 @@ blockquote {
 .logo_image {
   border-radius: 8px;
   width: 30rem;
-  box-shadow: 0.3rem 0.3rem 1rem rgba(0,0,0,0.1);
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 .text_below_logo {
@@ -292,14 +298,14 @@ blockquote {
   width: 50%;
   display: inline-block;
   vertical-align: top;
-  position: relative
+  position: relative;
 }
 
 .logo_and_text {
   display: inline-block;
   margin: 0 auto;
-  position:absolute;
-  left:50%;
+  position: absolute;
+  left: 50%;
   transform: translate(-50%);
 }
 
@@ -318,7 +324,7 @@ blockquote {
   max-height: 40rem;
   border-radius: 8px;
   padding: 2rem 3rem;
-  box-shadow: 0.3rem 0.3rem 1rem rgba(0,0,0,0.1);
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
   margin: 0 auto;
 }
 
@@ -329,12 +335,13 @@ blockquote {
 }
 
 .register_form__input {
-  border: 0.1rem rgba(0,0,0,0.1) solid;
+  border: 0.1rem rgba(0, 0, 0, 0.1) solid;
   padding: 1rem 2rem;
   border-radius: 8px;
 }
 
-.register_form__input:focus, .login_form__submit:focus {
+.register_form__input:focus,
+.login_form__submit:focus {
   outline: none;
 }
 
@@ -342,15 +349,15 @@ blockquote {
   padding: 1.6rem 3rem;
   border: none;
   border-radius: 8px;
-  background-color: rgb(120,180,120);
+  background-color: rgb(120, 180, 120);
   color: white;
   margin-top: 1.4rem;
 }
 
 .register_form__submit:hover {
   transform: scale(1.01) translateY(-1px);
-  transition: all .2s ease-in;
-  box-shadow: 0.3rem 0.3rem 1rem rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in;
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 .register_form__submit:active {
@@ -365,7 +372,7 @@ blockquote {
 .register_form__info a {
   font-size: 1.4rem;
   font-weight: bold;
-  color: rgb(120,180,120)
+  color: rgb(120, 180, 120);
 }
 
 /* SEARCH COMPONENT */
@@ -373,15 +380,15 @@ blockquote {
   width: 100%;
 }
 
-.input-group{
+.input-group {
   width: 50%;
   margin: 0 auto;
   margin-bottom: 2rem;
   display: table;
-  border-collapse: separate
+  border-collapse: separate;
 }
 
-.form-control{
+.form-control {
   display: block;
   width: 100%;
   height: 36px;
@@ -393,20 +400,23 @@ blockquote {
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-.input-group .form-control{
+.input-group .form-control {
   position: relative;
   z-index: 2;
   float: left;
   width: 100%;
-  margin-bottom: 0
+  margin-bottom: 0;
 }
 
-.input-group-addon,.input-group-btn,.input-group .form-control{
-  display: table-cell
+.input-group-addon,
+.input-group-btn,
+.input-group .form-control {
+  display: table-cell;
 }
