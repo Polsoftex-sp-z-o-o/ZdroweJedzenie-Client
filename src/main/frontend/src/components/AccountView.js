@@ -24,14 +24,25 @@ class AccountView extends React.Component {
         return user.getUserById(0);
     }
 
-
-
     render() {
-        console.log("anything")
         return (
-            <div>{this.state.id}</div>,
-            <div>{this.state.address}</div>,
-            <div>{this.state.name}</div>
+            <div className="card bg-light">
+                <div className="card-body mx-auto" style={{ maxWidth: "80%" }}></div>
+                <h4 className="card-title mt-3 text-center">Twoje dane</h4>
+                <div className="container_account">
+                    <div className="row align-items-center">
+                        <blockquote className="quote-box">
+                            <p className="quote-text">
+                                <hr></hr><hr></hr><hr></hr><hr></hr>
+                                <div>{this.state.address}</div>
+                                <hr></hr>
+                                <div>{this.state.name}</div>
+                            </p>
+                            <hr></hr>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

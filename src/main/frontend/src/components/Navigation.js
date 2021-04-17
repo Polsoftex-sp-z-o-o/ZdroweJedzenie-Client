@@ -2,11 +2,10 @@ import React from 'react';
 import {Link} from "react-router-dom";
 
 class Navigation extends React.Component {
-   
+
    render() {
     const leftMenuLinks = [];
-   
-      leftMenuLinks.push(
+    leftMenuLinks.push(
         <Link key="products" to="/products">
           <li
             className="nav-item active"
@@ -14,6 +13,16 @@ class Navigation extends React.Component {
           >
             <span className="nav-link"> Produkty</span>
           </li>
+        </Link>
+    );
+    leftMenuLinks.push(
+        <Link key="account" to="/account">
+            <li
+                className="nav-item active"
+                style={{ margin: "0px 10px 0px 10px" }}
+            >
+                <span className="nav-link"> Moje konto</span>
+            </li>
         </Link>
     );
     
