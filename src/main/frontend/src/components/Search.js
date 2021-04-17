@@ -1,29 +1,14 @@
 import React from 'react';
 
-const filterProducts = (products, query) => {
-    if (!query) {
-        return products;
-    }
-
-    return products.filter((product) => {
-        const productName = product.name.toLowerCase();
-        return productName.includes(query);
-    });
-};
-
 class Search extends React.Component {
     constructor(props) {
         super(props);
         this.parentHandler = this.props.handler;
-        this.products = this.props.products;
-        this.productsToShow = this.props.products;
     }
 
     handleOnChange = (event) => {
         var query = event.target.value;
-        this.productsToShow = filterProducts(this.products, query)
-        this.setState({temp: event.target.value});
-        this.props.parentHandler(this.productsToShow);
+        this.props.parentHandler(query);
     }
 
     render() {
