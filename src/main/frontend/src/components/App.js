@@ -7,15 +7,9 @@ import HomeView from './HomeView'
 import RegisterView from './RegisterView'
 import LoginView from './LoginView'
 import AccountView from "./AccountView";
+import ProductsView from './ProductsView'
 
 class  App  extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      quote: "Cytat na dziś, który jest bardzo mądry.",
-      author: "Mądra osoba",
-    };
-  }
   render() {
     return (
       <Router>
@@ -27,7 +21,7 @@ class  App  extends React.Component {
               <Route path="/register" exact component={RegisterView} />
               <Route path="/login" exact component={LoginView} />
               <Route path="/account" exact component={AccountView} />
-
+              <Route path="/products" exact component={ProductsView} />
             </Switch>
           </div>
           <Footer />
