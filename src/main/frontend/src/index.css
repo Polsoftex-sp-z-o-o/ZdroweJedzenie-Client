@@ -192,6 +192,15 @@ blockquote {
   }
 }
 
+/* ACCOUNT VIEW */
+.container_account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: inherit;
+}
+
 /* LOGIN VIEW */
 .container_login {
   display: flex;
