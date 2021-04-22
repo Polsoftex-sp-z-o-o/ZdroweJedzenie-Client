@@ -8,6 +8,7 @@ import RegisterView from "./RegisterView";
 import LoginView from "./LoginView";
 import AccountView from "./AccountView";
 import ProductsView from "./ProductsView";
+import CartSummaryView from "./CartSummaryView";
 
 class App extends React.Component {
   render() {
@@ -22,6 +23,7 @@ class App extends React.Component {
               <Route path="/login" exact component={LoginView} />
               <Route path="/account" exact component={AccountView} />
               <Route path="/products" exact component={ProductsView} />
+              <Route path="/cart" exact component={CartSummaryView} />
             </Switch>
           </div>
           <Footer />
