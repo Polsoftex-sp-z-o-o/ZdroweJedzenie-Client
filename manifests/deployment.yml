@@ -57,7 +57,7 @@ spec:
               servicePort: 8080
             path: /
             pathType: Exact
-	  - backend:
+          - backend:
               serviceName: zdrowejedzenie-gateway
               servicePort: 8080
             path: /gateway/(.+)
