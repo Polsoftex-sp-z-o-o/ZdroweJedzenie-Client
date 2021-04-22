@@ -56,12 +56,12 @@ spec:
               serviceName: zdrowejedzenie-client
               servicePort: 8080
             path: /
-          - backend:
-              serviceName: zdrowejedzenie-gateway
-              servicePort: 8080
-            path: /gateway/(.+)
-          - backend:
-              serviceName: exampleproject
-              servicePort: 8080
-            path: /example/(.+)
+#          - backend:
+#              serviceName: zdrowejedzenie-gateway
+#              servicePort: 8080
+#            path: /gateway/(.+)
+#          - backend:
+#              serviceName: exampleproject
+#              servicePort: 8080
+#            path: /example/(.+)
 #            /gateway(/|$)(.*)
