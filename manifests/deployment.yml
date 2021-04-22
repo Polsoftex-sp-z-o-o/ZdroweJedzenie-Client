@@ -65,4 +65,3 @@ spec:
               servicePort: 8080
             path: /example/(.+)
 #            /gateway(/|$)(.*)
-
