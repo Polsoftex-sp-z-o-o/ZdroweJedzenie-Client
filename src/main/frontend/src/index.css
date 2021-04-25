@@ -321,7 +321,7 @@ blockquote {
   flex-direction: column;
   justify-content: center;
   width: 40rem;
-  max-height: 40rem;
+  max-height: 80rem;
   border-radius: 8px;
   padding: 2rem 3rem;
   box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
