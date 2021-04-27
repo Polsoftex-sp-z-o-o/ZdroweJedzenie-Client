@@ -420,3 +420,25 @@ blockquote {
 .input-group .form-control {
   display: table-cell;
 }
+
+.cart_navigation_container {
+  background-color: rgb(250, 250, 250);
+  width: 60rem;
+  max-height: 30rem;
+  border-radius: 8px;
+  padding: 2rem 3rem;
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.cart_container {
+  background-color: rgb(250, 250, 250);
+  border-radius: 8px;
+  padding: 2rem 3rem;
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.cart_delete_btn {
+  border-radius: 5px;
+  border: unset;
+  background-color: inherit;
+}

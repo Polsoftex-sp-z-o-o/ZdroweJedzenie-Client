@@ -19,6 +19,14 @@ class Navigation extends React.Component {
       </Link>
     );
 
+    leftMenuLinks.push(
+      <Link key="cart" to="/cart">
+        <li className="nav-item active" style={{ margin: "0px 10px 0px 10px" }}>
+          <span className="nav-link">Koszyk</span>
+        </li>
+      </Link>
+    );
+
     const rightMenuLinks = [];
     rightMenuLinks.push(
       <Link key="register" to="/register">
