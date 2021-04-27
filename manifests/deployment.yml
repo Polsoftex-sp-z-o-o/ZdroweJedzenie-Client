@@ -67,4 +67,24 @@ spec:
               servicePort: 8080
             path: /example/(.+)
             pathType: ImplementationSpecific
+          - backend:
+              serviceName: zdrowejedzenie-users
+              servicePort: 8080
+            path: /users/(.+)
+            pathType: ImplementationSpecific
+          - backend:
+              serviceName: zdrowejedzenie-products
+              servicePort: 8080
+            path: /products/(.+)
+            pathType: ImplementationSpecific
+          - backend:
+              serviceName: zdrowejedzenie-payment
+              servicePort: 8080
+            path: /payment/(.+)
+            pathType: ImplementationSpecific
+          - backend:
+              serviceName: zdrowejedzenie-orders
+              servicePort: 8080
+            path: /orders/(.+)
+            pathType: ImplementationSpecific
 
