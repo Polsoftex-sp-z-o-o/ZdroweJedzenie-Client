@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 class Logo extends React.Component {
   constructor(props) {
@@ -28,7 +29,10 @@ class RegisterView extends React.Component {
     this.state = {
       email: "",
       password: "",
-      confirm_password: "",
+      passwordConfirmation: "",
+      firstName: "",
+      lastName: "",
+      address: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,25 +40,61 @@ class RegisterView extends React.Component {
   }
 
   handleChange(event) {
-    const target = event.target;
-    const value = target.value;
-    let name = target.name;
     this.setState({
-      [name]: value,
+      [event.target.name]: event.target.value,
     });
+    event.preventDefault();
+  }
+
+  createUser(state) {
+    // Do sprawdzenia ( nie działa )
+    // client({
+    //   method: "POST",
+    //   path: "http://127.0.0.1:3001/users",
+    //   headers: { Accept: "application/json" },
+    //   entity: {
+    //     user: {
+    //       email: state.email,
+    //       password: state.password,
+    //       password_confirmation: state.passwordConfirmation,
+    //       last_name: state.lastName,
+    //       first_name: state.firstName,
+    //       address: state.address,
+    //   }}
+    // })
+    //   .then((response) => console.log(response))
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    axios
+      .post(
+        "http://127.0.0.1:3001/users",
+        {
+          user: {
+            email: state.email,
+            password: state.password,
+            password_confirmation: state.passwordConfirmation,
+            last_name: state.lastName,
+            first_name: state.firstName,
+            address: state.address,
+          },
+        },
+        { withCredentials: false }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   handleSubmit(event) {
-    if (this.state.password !== this.state.confirm_password) {
-      alert("Nie pasujące hasła");
+    if (this.state.password !== this.state.passwordConfirmation) {
+      alert("Podane przez Ciebie hasła nie są jednakowe.");
     } else {
-      alert(
-        "Your email: " +
-          this.state.email +
-          ".Your password: " +
-          this.state.password
-      );
-      event.preventDefault();
+      this.createUser(this.state)
     }
   }
 
@@ -73,6 +113,7 @@ class RegisterView extends React.Component {
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
+              required
             />
             <label className="register_form__label">hasło</label>
             <input
@@ -81,14 +122,43 @@ class RegisterView extends React.Component {
               type="password"
               value={this.state.password}
               onChange={this.handleChange}
+              required
             />
             <label className="register_form__label">Potwierdź hasło</label>
             <input
               className="register_form__input"
-              name="confirm_password"
+              name="passwordConfirmation"
               type="password"
-              value={this.state.confirm_password}
+              value={this.state.passwordConfirmation}
               onChange={this.handleChange}
+              required
+            />
+            <label className="register_form__label">Imię</label>
+            <input
+              className="register_form__input"
+              name="firstName"
+              type="text"
+              value={this.state.firstName}
+              onChange={this.handleChange}
+              required
+            />
+            <label className="register_form__label">Nazwisko</label>
+            <input
+              className="register_form__input"
+              name="lastName"
+              type="text"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+              required
+            />
+            <label className="register_form__label">Adres zamieszkania</label>
+            <input
+              className="register_form__input"
+              name="address"
+              type="text"
+              value={this.state.address}
+              onChange={this.handleChange}
+              required
             />
             <input
               className="register_form__submit"
