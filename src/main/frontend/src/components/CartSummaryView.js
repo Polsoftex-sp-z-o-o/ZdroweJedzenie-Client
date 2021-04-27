@@ -45,7 +45,7 @@ class CartSummaryView extends React.Component {
           <div className="cart_navigation_container row justify-content-around">
             <Link key="products" to="/products">
               <button className="login_form__submit " type="submit">
-                Back to shop
+                Powrót do sklepu
               </button>
             </Link>
             <button
@@ -53,7 +53,7 @@ class CartSummaryView extends React.Component {
               type="submit"
               onClick={this.handleBuy}
             >
-              Buy
+              Kup
             </button>
           </div>
         </div>
