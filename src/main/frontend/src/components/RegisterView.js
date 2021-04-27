@@ -46,34 +46,55 @@ class RegisterView extends React.Component {
     event.preventDefault();
   }
 
+  createUser(state) {
+    // Do sprawdzenia ( nie działa )
+    // client({
+    //   method: "POST",
+    //   path: "http://127.0.0.1:3001/users",
+    //   headers: { Accept: "application/json" },
+    //   entity: {
+    //     user: {
+    //       email: state.email,
+    //       password: state.password,
+    //       password_confirmation: state.passwordConfirmation,
+    //       last_name: state.lastName,
+    //       first_name: state.firstName,
+    //       address: state.address,
+    //   }}
+    // })
+    //   .then((response) => console.log(response))
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    axios
+      .post(
+        "http://127.0.0.1:3001/users",
+        {
+          user: {
+            email: state.email,
+            password: state.password,
+            password_confirmation: state.passwordConfirmation,
+            last_name: state.lastName,
+            first_name: state.firstName,
+            address: state.address,
+          },
+        },
+        { withCredentials: false }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   handleSubmit(event) {
     if (this.state.password !== this.state.passwordConfirmation) {
       alert("Podane przez Ciebie hasła nie są jednakowe.");
     } else {
-      // URL --> zamienic do users
-      axios
-        .post(
-          "http://127.0.0.1:3001/users",
-          {
-            user: {
-              email: this.state.email,
-              password: this.state.password,
-              password_confirmation: this.state.passwordConfirmation,
-              last_name: this.state.lastName,
-              first_name: this.state.firstName,
-              address: this.state.address,
-            },
-          },
-          { withCredentials: false }
-        )
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      event.preventDefault();
+      this.createUser(this.state)
     }
   }
 
