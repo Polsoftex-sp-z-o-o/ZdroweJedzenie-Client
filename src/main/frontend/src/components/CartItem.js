@@ -4,6 +4,7 @@ import productsMock from "../utils/productsMock";
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
+    this.refleshPrice = this.refleshPrice.bind(this);
     this.increaseAmount = this.increaseAmount.bind(this);
     this.decreaseAmount = this.decreaseAmount.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -16,6 +17,7 @@ class CartItem extends React.Component {
     this.idRef.current = this.props.product.productId;
     this.nameRef = React.createRef();
     this.availableQuantityRef = React.createRef();
+    this.eachPriceRef = React.createRef();
   }
   componentDidMount() {
     this.getProductInfo(this.idRef.current);
@@ -25,18 +27,26 @@ class CartItem extends React.Component {
     const product = await mock.getProductById(id);
     this.nameRef.current = product.entity.name;
     this.availableQuantityRef.current = product.entity.quantity;
-    const computedPrice = product.entity.price * this.state.quantity;
+    this.eachPriceRef.current = product.entity.price;
+    const computedPrice = this.refleshPrice(this.state.quantity);
     this.setState({
       ...this.state,
       price: computedPrice,
     });
   }
 
+  refleshPrice(quantity) {
+    let newPrice = this.eachPriceRef.current * quantity;
+    newPrice = newPrice.toFixed(2);
+    return newPrice;
+  }
+
   increaseAmount() {
     console.log("increase");
     if (this.state.quantity <= this.availableQuantityRef.current) {
       const increasedAmount = this.state.quantity + 1;
-      this.setState({ ...this.state, quantity: increasedAmount });
+      const newPrice = this.refleshPrice(increasedAmount);
+      this.setState({ quantity: increasedAmount, price: newPrice });
     }
   }
 
@@ -44,7 +54,8 @@ class CartItem extends React.Component {
     console.log("decrease");
     if (this.state.quantity > 0) {
       const decreasedAmount = this.state.quantity - 1;
-      this.setState({ ...this.state, quantity: decreasedAmount });
+      const newPrice = this.refleshPrice(decreasedAmount);
+      this.setState({ quantity: decreasedAmount, price: newPrice });
     }
   }
 
