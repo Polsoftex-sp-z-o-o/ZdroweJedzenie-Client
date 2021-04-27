@@ -4,6 +4,10 @@ import productsMock from "../utils/productsMock";
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
+    this.increaseAmount = this.increaseAmount.bind(this);
+    this.decreaseAmount = this.decreaseAmount.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+
     this.state = {
       quantity: props.product.quantity,
       price: 0,
@@ -19,7 +23,6 @@ class CartItem extends React.Component {
   async getProductInfo(id) {
     var mock = new productsMock();
     const product = await mock.getProductById(id);
-    // console.warn(product.entity);
     this.nameRef.current = product.entity.name;
     this.availableQuantityRef.current = product.entity.quantity;
     const computedPrice = product.entity.price * this.state.quantity;
@@ -27,6 +30,30 @@ class CartItem extends React.Component {
       ...this.state,
       price: computedPrice,
     });
+  }
+
+  increaseAmount() {
+    console.log("increase");
+    if (this.state.quantity <= this.availableQuantityRef.current) {
+      const increasedAmount = this.state.quantity + 1;
+      this.setState({ ...this.state, quantity: increasedAmount });
+    }
+  }
+
+  decreaseAmount() {
+    console.log("decrease");
+    if (this.state.quantity > 0) {
+      const decreasedAmount = this.state.quantity - 1;
+      this.setState({ ...this.state, quantity: decreasedAmount });
+    }
+  }
+
+  deleteItem() {
+    console.log("item delete requested");
+  }
+
+  buy() {
+    console.log("buy request");
   }
 
   render() {
@@ -43,18 +70,27 @@ class CartItem extends React.Component {
           {this.nameRef.current}
         </div>
         <div className="col-md-2 row justify-content-around">
-          <button className="cart_delete_btn col-md-2 row justify-content-center align-items-center">
+          <button
+            className="cart_delete_btn col-md-2 row justify-content-center align-items-center"
+            onClick={this.decreaseAmount}
+          >
             <i className="fas fa-minus"></i>
           </button>
           <div className="col-md-2 row justify-content-center ">
             {this.state.quantity}
           </div>
-          <button className="cart_delete_btn col-md-2 row justify-content-center align-items-center">
+          <button
+            className="cart_delete_btn col-md-2 row justify-content-center align-items-center"
+            onClick={this.increaseAmount}
+          >
             <i className="fas fa-plus"></i>
           </button>
         </div>
         <div className="col-md-2 row justify-content-center">
-          <button className="cart_delete_btn col-md-6">
+          <button
+            className="cart_delete_btn col-md-6"
+            onClick={this.deleteItem}
+          >
             <i className="fas fa-trash-alt"></i>
           </button>
         </div>
@@ -67,3 +103,5 @@ class CartItem extends React.Component {
   }
 }
 export default CartItem;
+
+// aktualizacja ceny po zmianie stanu
