@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import UserStore from "../stores/UserStore";
 
 class Navigation extends React.Component {
+  doLogout() {
+    UserStore.isLoggedIn = false;
+    UserStore.username = '';
+  }
+
   render() {
     const leftMenuLinks = [];
     leftMenuLinks.push(
@@ -55,15 +61,17 @@ class Navigation extends React.Component {
       </Link>
     );
     rightMenuLinks.push(
-      <li
-        key="logout"
-        className="nav-item active"
-        style={{ margin: "0px 10px 0px 10px" }}
-      >
-        <a href="/logout" className="btn btn-outline-danger">
-          Wyloguj
-        </a>
-      </li>
+      <Link key="logout" to="/logout">
+        <li
+          key="logout"
+          className="nav-item active"
+          style={{ margin: "0px 10px 0px 10px" }}
+        >
+          <button href="/logout" className="btn btn-outline-danger" onClick="this.doLogout">
+            Wyloguj
+          </button>
+        </li>
+      </Link>
     );
 
     return (
