@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { decodeToken } from "react-jwt";
+import UserStore from "../stores/UserStore";
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -49,6 +50,10 @@ class LoginView extends React.Component {
   handleSubmit(event) {
     this.loginUser(this.state)
     event.preventDefault();
+
+    UserStore.isLoggedIn = true;
+    UserStore.username = "test";
+
   }
 
   render() {
