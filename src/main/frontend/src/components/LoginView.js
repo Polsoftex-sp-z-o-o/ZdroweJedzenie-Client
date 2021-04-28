@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { decodeToken } from "react-jwt";
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -28,7 +29,10 @@ class LoginView extends React.Component {
         { headers: headers }
       )
       .then((response) => {
-        console.log(response.data);
+        let token = response.data
+        const decodedToken = decodeToken(token)  
+        console.log(decodedToken)
+        
       })
       .catch((error) => {
         console.log(error);
