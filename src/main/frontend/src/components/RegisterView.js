@@ -67,20 +67,22 @@ class RegisterView extends React.Component {
     //     console.log(error);
     //   });
 
+    const headers = {
+      'Content-Type':'application/json',
+    }
+
     axios
       .post(
-        "http://127.0.0.1:3001/users",
+        "http://zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io/gateway/users/",
         {
-          user: {
-            email: state.email,
-            password: state.password,
-            password_confirmation: state.passwordConfirmation,
-            last_name: state.lastName,
-            first_name: state.firstName,
-            address: state.address,
-          },
+          email: state.email,
+          address: state.address,
+          password: state.password,
+          confirmPassword: state.passwordConfirmation,
+          firstName: state.firstName,
+          lastName: state.lastName,
         },
-        { withCredentials: false }
+        { headers: headers }
       )
       .then((response) => {
         console.log(response);

@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import { decodeToken } from "react-jwt";
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -12,22 +14,40 @@ class LoginView extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  loginUser(state) {
+    const headers = {
+      'Content-Type':'application/json',
+    } 
+
+    axios
+      .post(
+        "http://zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io/gateway/login/",
+        {
+          email: state.email,
+          password: state.password
+        },
+        { headers: headers }
+      )
+      .then((response) => {
+        let token = response.data
+        const decodedToken = decodeToken(token)  
+        console.log(decodedToken)
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   handleChange(event) {
-    const target = event.target;
-    const value = target.value;
-    let name = target.name;
     this.setState({
-      [name]: value,
+      [event.target.name]: event.target.value,
     });
+    event.preventDefault();
   }
 
   handleSubmit(event) {
-    alert(
-      "Your email: " +
-        this.state.email +
-        ".Your password: " +
-        this.state.password
-    );
+    this.loginUser(this.state)
     event.preventDefault();
   }
 
@@ -47,7 +67,7 @@ class LoginView extends React.Component {
           <input
             className="login_form__input"
             name="password"
-            type="password"
+            type="text"
             value={this.state.password}
             onChange={this.handleChange}
           />
