@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { observer } from "mobx-react";
-import UserStore from "../stores/UserStore";
 
 import Footer from "./Footer";
 import Navigation from "./Navigation";
@@ -17,13 +15,6 @@ class App extends React.Component {
     return (
       <Router>
         <div className="container-fluid">
-          {
-            UserStore.isLoggedIn ? (
-              <p>Logged In</p>
-            ) : (
-              <p>Logged Out</p>
-            )
-          }
           <Navigation />
           <div className="jumbotron">
             <Switch>
@@ -42,4 +33,4 @@ class App extends React.Component {
   }
 }
 
-export default observer(App);
+export default App;
