@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import UserStore from "../stores/UserStore";
+import { observer } from "mobx-react";
 
 class Navigation extends React.Component {
   doLogout() {
@@ -17,13 +18,15 @@ class Navigation extends React.Component {
         </li>
       </Link>
     );
-    leftMenuLinks.push(
-      <Link key="account" to="/account">
-        <li className="nav-item active" style={{ margin: "0px 10px 0px 10px" }}>
-          <span className="nav-link"> Moje konto</span>
-        </li>
-      </Link>
-    );
+    if(UserStore.isLoggedIn){
+      leftMenuLinks.push(
+        <Link key="account" to="/account">
+          <li className="nav-item active" style={{ margin: "0px 10px 0px 10px" }}>
+            <span className="nav-link"> Moje konto</span>
+          </li>
+        </Link>
+      );
+    }
 
     leftMenuLinks.push(
       <Link key="cart" to="/cart">
@@ -34,6 +37,8 @@ class Navigation extends React.Component {
     );
 
     const rightMenuLinks = [];
+
+    if(UserStore.isLoggedIn == false){
     rightMenuLinks.push(
       <Link key="register" to="/register">
         <li
@@ -47,32 +52,35 @@ class Navigation extends React.Component {
         </li>
       </Link>
     );
-    rightMenuLinks.push(
-      <Link key="login" to="/login">
-        <li
-          key="login"
-          className="nav-item active"
-          style={{ margin: "0px 10px 0px 10px" }}
-        >
-          <button href="/logout" className="btn btn-outline-success">
-            Zaloguj
-          </button>
-        </li>
-      </Link>
-    );
-    rightMenuLinks.push(
-      <Link key="logout" to="/logout">
-        <li
-          key="logout"
-          className="nav-item active"
-          style={{ margin: "0px 10px 0px 10px" }}
-        >
-          <button href="/logout" className="btn btn-outline-danger" onClick="this.doLogout">
-            Wyloguj
-          </button>
-        </li>
-      </Link>
-    );
+    
+      rightMenuLinks.push(
+        <Link key="login" to="/login">
+          <li
+            key="login"
+            className="nav-item active"
+            style={{ margin: "0px 10px 0px 10px" }}
+          >
+            <button href="/logout" className="btn btn-outline-success">
+              Zaloguj
+            </button>
+          </li>
+        </Link>
+      );
+    }else {
+      rightMenuLinks.push(
+        <Link key="logout" to="/logout">
+          <li
+            key="logout"
+            className="nav-item active"
+            style={{ margin: "0px 10px 0px 10px" }}
+          >
+            <button href="/logout" className="btn btn-outline-danger" onClick="this.doLogout">
+              Wyloguj
+            </button>
+          </li>
+        </Link>
+      );
+    }
 
     return (
       <header>
@@ -107,4 +115,4 @@ class Navigation extends React.Component {
   }
 }
 
-export default Navigation;
+export default observer(Navigation);
