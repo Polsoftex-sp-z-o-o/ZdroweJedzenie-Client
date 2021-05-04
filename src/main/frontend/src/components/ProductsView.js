@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import Search from "./Search";
 import Product from "./Product";
+import Fuse from "fuse.js"
 
 class ProductsView extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class ProductsView extends React.Component {
         name: "Masło",
         price: "15$",
         description: "Pyszne i tłuste.",
-        category: "Fruit",
+        category: "Dairy",
         quantity: 1000,
       },
       {
@@ -86,21 +87,36 @@ class ProductsView extends React.Component {
     this.props.onNavigate(this.props.links.last.href);
   }
 
-  handleSearch(query) {
+  handleSearch(query, category) {
     this.setState({
-      filteredProducts: this.filterProducts(query),
+      filteredProducts: this.filterProducts(query, category),
     });
   }
 
-  filterProducts(query) {
-    if (!query) {
-      return this.mocked_products;
+  filterProducts(query, category) {
+    var candidates = this.mocked_products;
+    if(category !== "All"){
+      candidates = this.mocked_products.filter(
+        function(product){
+          return product.category === category;
+      })
     }
 
-    return this.mocked_products.filter((product) => {
-      const productName = product.name.toLowerCase();
-      return productName.includes(query);
+    if (!query) {
+      return candidates;
+    }
+
+    const fuse = new Fuse(candidates, {
+      keys: ["name", "description"],
+    })
+    const result = fuse.search(query);
+    const output = [];
+
+    result.forEach((item) => {
+      output.push(item.item);
     });
+
+    return output;
   }
 
   render() {

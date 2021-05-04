@@ -4,12 +4,19 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.parentHandler = this.props.handler;
+    this.query = "";
+    this.category = "All";
   }
 
-  handleOnChange = (event) => {
-    var query = event.target.value;
-    this.props.parentHandler(query);
+  handleInputOnChange = (event) => {
+    this.query = event.target.value;
+    this.props.parentHandler(this.query, this.category);
   };
+
+  handleSelectOnChange = (event) => {
+    this.category = event.target.value;
+    this.props.parentHandler(this.query, this.category)
+  }
 
   render() {
     return (
@@ -18,15 +25,15 @@ class Search extends React.Component {
           <input
             className="form-control"
             type="text"
-            onChange={this.handleOnChange}
+            onChange={this.handleInputOnChange}
             placeholder="Szukaj"
           />
           <span className="input-group-addon"></span>
-          <select className="form-control">
-            <option value="wszystko">Wszystko</option>
-            <option value="owoce">Owoce</option>
-            <option value="warzywa">Warzywa</option>"
-            <option value="nabiał">Nabiał</option>
+          <select className="form-control" onChange={this.handleSelectOnChange}>
+            <option value="All">Wszystko</option>
+            <option value="Fruit">Owoce</option>
+            <option value="Vegetable">Warzywa</option>"
+            <option value="Dairy">Nabiał</option>
           </select>
         </div>
       </div>
