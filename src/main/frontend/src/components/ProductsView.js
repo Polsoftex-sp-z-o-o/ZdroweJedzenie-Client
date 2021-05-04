@@ -95,10 +95,10 @@ class ProductsView extends React.Component {
 
   filterProducts(query, category) {
     var candidates = this.mocked_products;
-    if(category != "All"){
+    if(category !== "All"){
       candidates = this.mocked_products.filter(
         function(product){
-          return product.category == category;
+          return product.category === category;
       })
     }
 
