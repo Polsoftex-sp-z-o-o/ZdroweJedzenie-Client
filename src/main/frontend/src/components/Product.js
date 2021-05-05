@@ -21,7 +21,6 @@ class Product extends React.Component {
         },
         { "Content-Type": "application/json" }
       );
-      // const response = "temp";
       console.log(response);
       if (history) history.push("/cart");
     } catch (err) {
@@ -45,29 +44,6 @@ class Product extends React.Component {
   loadCategories() {}
 
   render() {
-    const controls = [];
-    controls.push(
-      <input
-        type="number"
-        min="0"
-        max="1000"
-        size="7"
-        step="1"
-        value={this.state.amountToCart}
-        onChange={this.handleCartInput.bind(this)}
-      />
-    );
-    controls.push(
-      <button
-        id="buyButton"
-        key="buyButton"
-        onClick={this.addToCart.bind(this)}
-        className="btn btn-info"
-      >
-        <i className="fas fa-shopping-cart"></i>
-      </button>
-    );
-
     return (
       <div className="col-lg-4 col-md-6 mb-4">
         <div className="card h-100">
@@ -89,12 +65,31 @@ class Product extends React.Component {
             <h5> {this.props.product.price} </h5>
             <p className="card-text"> {this.props.product.description} </p>
           </div>
-          <div className="card-footer">
-            <small className="text-muted">
+          <div className="card-footer d-flex align-items-center justify-content-between">
+            <small className="col-md-3 text-muted">
               {" "}
               Pozostało: {this.props.product.quantity}
             </small>
-            <span> {controls} </span>
+            <div className="col-md-4 justify-content-around">
+              <input
+                type="number"
+                min="0"
+                max={this.props.product.quantity}
+                size="7"
+                step="1"
+                value={this.state.amountToCart}
+                onChange={this.handleCartInput.bind(this)}
+                className="col-md-6 p-0"
+              />
+              <button
+                id="buyButton"
+                key="buyButton"
+                onClick={this.addToCart.bind(this)}
+                className="col-md-4 btn btn-info"
+              >
+                <i className="fas fa-shopping-cart"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
