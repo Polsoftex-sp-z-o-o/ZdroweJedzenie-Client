@@ -11,8 +11,6 @@ class Product extends React.Component {
   }
   async addToCart() {
     try {
-      const { history } = this.props;
-
       const response = await axios.post(
         "http://zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io/gateway/cart/",
         {
@@ -22,9 +20,13 @@ class Product extends React.Component {
         { "Content-Type": "application/json" }
       );
       console.log(response);
-      if (history) history.push("/cart");
+      this.setState({ amountToCart: 0 });
+      alert(
+        `Dodano do koszyka ${this.props.product.name} w ilości ${this.state.amountToCart} `
+      );
     } catch (err) {
       console.warn(err);
+      alert("Nie udało się dodać produktu do koszyka");
     }
   }
 
