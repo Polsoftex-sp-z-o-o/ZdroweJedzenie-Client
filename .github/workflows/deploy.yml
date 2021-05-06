@@ -1,11 +1,9 @@
 name: Deploy
 
 env:
-  APP_NAME: "zdrowejedzenie-client"
-  REGISTRY_NAME: "polsoftex"
-  CLUSTER_RESOURCE_GROUP: "polsoftex"
-  CLUSTER_NAME: "polCluster"
-  IMAGE_PULL_SECRET: "zdrowejedzenie-secret"
+  APP_NAME: "zdrowejedzenie-gateway"
+  CLUSTER_NAME: "polsoftexCluster"
+  IMAGE_PULL_SECRET: "registry-secret"
   MANIFEST: 'manifests/deployment.yml'
 
 on:
@@ -50,7 +48,7 @@ jobs:
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           cluster-name: ${{ env.CLUSTER_NAME }}
-          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+          resource-group: ${{ secret.RESOURCE_GROUP }}
 
         # Create namespace if doesn't exist
       #         - run: |
