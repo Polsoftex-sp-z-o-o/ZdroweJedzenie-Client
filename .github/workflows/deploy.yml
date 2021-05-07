@@ -1,7 +1,7 @@
 name: Deploy
 
 env:
-  APP_NAME: "zdrowejedzenie-gateway"
+  APP_NAME: "zdrowejedzenie-client"
   CLUSTER_NAME: "polsoftexCluster"
   IMAGE_PULL_SECRET: "registry-secret"
   MANIFEST: 'manifests/deployment.yml'
