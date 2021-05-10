@@ -442,3 +442,11 @@ blockquote {
   border: unset;
   background-color: inherit;
 }
+
+/* ORDER SUMMARY */
+.order_summary {
+  position: absolute;
+  left: 40%;
+  width: 20%;
+  z-index: 9;
+}
