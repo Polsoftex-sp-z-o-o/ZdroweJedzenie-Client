@@ -2,11 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
+import { runInAction} from "mobx"
 
 class Navigation extends React.Component {
+  constructor(props){
+    super(props);
+    this.doLogout = this.doLogout.bind(this);
+  }
+
   doLogout() {
-    UserStore.isLoggedIn = false;
-    UserStore.username = '';
+    runInAction(() => {
+      UserStore.isLoggedIn = false;
+      UserStore.email = '';
+      UserStore.firstName = '';
+      UserStore.lastName = '';
+      UserStore.token = null;
+  })
+    console.log("logout")
   }
 
   render() {
@@ -38,7 +50,7 @@ class Navigation extends React.Component {
 
     const rightMenuLinks = [];
 
-    if(UserStore.isLoggedIn == false){
+    if(UserStore.isLoggedIn === false){
     rightMenuLinks.push(
       <Link key="register" to="/register">
         <li
@@ -74,7 +86,7 @@ class Navigation extends React.Component {
             className="nav-item active"
             style={{ margin: "0px 10px 0px 10px" }}
           >
-            <button href="/logout" className="btn btn-outline-danger" onClick="this.doLogout">
+            <button href="/logout" className="btn btn-outline-danger" onClick={this.doLogout}>
               Wyloguj
             </button>
           </li>
