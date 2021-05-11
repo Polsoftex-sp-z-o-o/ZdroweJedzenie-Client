@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { decodeToken } from "react-jwt";
+import UserStore from "../stores/UserStore";
+import { runInAction} from "mobx"
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -21,7 +23,7 @@ class LoginView extends React.Component {
 
     axios
       .post(
-        "http://zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io/gateway/login/",
+        "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/login/",
         {
           email: state.email,
           password: state.password
@@ -31,8 +33,17 @@ class LoginView extends React.Component {
       .then((response) => {
         let token = response.data
         const decodedToken = decodeToken(token)  
-        console.log(decodedToken)
-        
+        //console.log(decodedToken)
+
+        runInAction(() => {
+            UserStore.isLoggedIn = true;
+            UserStore.email = decodedToken['sub'];
+            UserStore.firstname = decodedToken['first-name'];
+            UserStore.lastName = decodedToken['last-name'];
+            UserStore.token = token;
+        })
+
+        console.log("logged in")
       })
       .catch((error) => {
         console.log(error);
@@ -49,6 +60,10 @@ class LoginView extends React.Component {
   handleSubmit(event) {
     this.loginUser(this.state)
     event.preventDefault();
+
+    // UserStore.isLoggedIn = true;
+    // UserStore.username = "test";
+
   }
 
   render() {
