@@ -45,6 +45,8 @@ class LoginView extends React.Component {
         })
 
         console.log("logged in")
+
+        this.props.history.push('/products');
       })
       .catch((error) => {
         console.log(error);
