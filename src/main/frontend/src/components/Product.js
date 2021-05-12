@@ -33,13 +33,9 @@ class Product extends React.Component {
           },
           {
             "Content-Type": "application/json",
-            params: { userid: decodedToken['user-id'] },
+            params: { userid: decodedToken["user-id"] },
           }
         );
-        console.log(token);
-        console.log(decodedToken);
-        // const response = "temp";
-        console.log(response);
         this.setState({ amountToCart: 0 });
         alert(
           `Dodano do koszyka ${this.props.product.name} w ilości ${this.state.amountToCart} `
