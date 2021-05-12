@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
-import { runInAction} from "mobx"
 
 class Navigation extends React.Component {
   constructor(props){
@@ -11,17 +10,14 @@ class Navigation extends React.Component {
   }
 
   doLogout() {
-    runInAction(() => {
-      UserStore.isLoggedIn = false;
-      UserStore.email = '';
-      UserStore.firstName = '';
-      UserStore.lastName = '';
-      UserStore.token = null;
-  })
-    console.log("logout")
+    console.log("logout");
+    UserStore.clear();
+    window.location.reload();
   }
 
   render() {
+    //todo: find better place for refresh
+    UserStore.refresh();
     const leftMenuLinks = [];
     leftMenuLinks.push(
       <Link key="products" to="/products">
