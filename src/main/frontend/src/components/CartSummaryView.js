@@ -76,7 +76,3 @@ class CartSummaryView extends React.Component {
 }
 
 export default CartSummaryView;
-
-// sterowanie ilością produktów
-// dopracowanie stylów
-// dopisanie funkcji

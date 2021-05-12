@@ -63,6 +63,10 @@ class LoginView extends React.Component {
   handleSubmit(event) {
     this.loginUser(this.state)
     event.preventDefault();
+
+    // UserStore.isLoggedIn = true;
+    // UserStore.username = "test";
+
   }
 
   render() {

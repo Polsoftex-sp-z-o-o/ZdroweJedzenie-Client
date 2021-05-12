@@ -10,6 +10,7 @@ class Navigation extends React.Component {
   }
 
   doLogout() {
+
     console.log("logout");
     UserStore.clear();
     window.location.reload();
