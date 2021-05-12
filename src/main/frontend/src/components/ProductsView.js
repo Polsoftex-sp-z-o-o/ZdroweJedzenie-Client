@@ -3,6 +3,8 @@ import React from "react";
 import Search from "./Search";
 import Product from "./Product";
 import Fuse from "fuse.js"
+import CategoriesView from "./CategoriesView" 
+
 
 class ProductsView extends React.Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class ProductsView extends React.Component {
     this.handleNavLast = this.handleNavLast.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+	this.handleCategories = this.handleCategories.bind(this);
 
     this.mocked_products = [
       {
@@ -92,6 +95,22 @@ class ProductsView extends React.Component {
       filteredProducts: this.filterProducts(query, category),
     });
   }
+  
+  handleCategories(categories) {
+    this.setState({
+      filteredProducts: this.filterProductsByCategories(categories),
+    });
+  }
+
+  filterProductsByCategories(categories) {
+    var candidates = this.mocked_products;
+	if(categories.length===0) return candidates;
+    candidates = this.mocked_products.filter(
+	  function(product){
+	    return categories.includes(product.category);
+    });
+    return candidates;
+  }
 
   filterProducts(query, category) {
     var candidates = this.mocked_products;
@@ -132,6 +151,7 @@ class ProductsView extends React.Component {
 
     return (
       <div>
+	  	<CategoriesView parentHandler={this.handleCategories}/>
         <Search parentHandler={this.handleSearch} />
         <div className="row">{products}</div>
       </div>

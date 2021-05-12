@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import cartMock from "../utils/cartMock";
+import OrderSummary from "./OrderSummary";
 
 class CartSummaryView extends React.Component {
   constructor(props) {
@@ -9,7 +10,14 @@ class CartSummaryView extends React.Component {
     this.handleBuy = this.handleBuy.bind(this);
     this.state = {
       items: [],
+      showSummary: false
     };
+  }
+
+  togglePopup() {
+    this.setState({
+      showSummary: !this.state.showSummary
+    });
   }
 
   componentDidMount() {
@@ -28,11 +36,16 @@ class CartSummaryView extends React.Component {
   handleBuy(e) {
     e.preventDefault();
     console.log("buy request");
+    this.togglePopup();
   }
 
   render() {
     return (
       <div className="content">
+        {this.state.showSummary ?
+            <OrderSummary text="Podsumowanie" closePopup={this.togglePopup.bind(this)}>
+            </OrderSummary> : null
+          }
         <div className="row justify-content-center">
           <div className="col-md-6">
             {this.state.items.map((product) => (
