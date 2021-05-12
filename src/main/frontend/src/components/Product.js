@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { observer } from "mobx-react";
+import { decodeToken } from "react-jwt";
+import UserStore from "../stores/UserStore";
 
 class Product extends React.Component {
   constructor(props) {
@@ -12,15 +15,30 @@ class Product extends React.Component {
   async addToCart() {
     if (this.state.amountToCart > 0) {
       try {
-        // const response = await axios.post(
-        //   "http://zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io/gateway/cart/",
-        //   {
-        //     productId: this.props.product.id,
-        //     quantity: this.state.amountToCart,
-        //   },
-        //   { "Content-Type": "application/json" }
-        // );
-        const response = "temp";
+        const apiURL =
+          "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
+        const token = UserStore.token;
+        const decodedToken = decodeToken(token);
+        const authAxios = axios.create({
+          baseURL: apiURL,
+          headers: {
+            Authorization: token,
+          },
+        });
+        const response = await authAxios.post(
+          "cart/",
+          {
+            productId: this.props.product.id,
+            quantity: this.state.amountToCart,
+          },
+          {
+            "Content-Type": "application/json",
+            params: { userid: decodedToken['user-id'] },
+          }
+        );
+        console.log(token);
+        console.log(decodedToken);
+        // const response = "temp";
         console.log(response);
         this.setState({ amountToCart: 0 });
         alert(
@@ -102,4 +120,4 @@ class Product extends React.Component {
   }
 }
 
-export default withRouter(Product);
+export default withRouter(observer(Product));
