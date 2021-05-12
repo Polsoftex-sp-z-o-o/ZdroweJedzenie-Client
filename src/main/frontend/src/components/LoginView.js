@@ -41,9 +41,12 @@ class LoginView extends React.Component {
             UserStore.firstname = decodedToken['first-name'];
             UserStore.lastName = decodedToken['last-name'];
             UserStore.token = token;
+            UserStore.save();
         })
 
         console.log("logged in")
+
+        this.props.history.push('/products');
       })
       .catch((error) => {
         console.log(error);

@@ -97,6 +97,7 @@ class RegisterView extends React.Component {
       alert("Podane przez Ciebie hasła nie są jednakowe.");
     } else {
       this.createUser(this.state)
+      this.props.history.push('/login');
     }
   }
 
