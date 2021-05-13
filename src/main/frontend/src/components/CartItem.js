@@ -1,5 +1,6 @@
 import React from "react";
-import productsMock from "../utils/productsMock";
+import axios from "axios";
+import ProductsView from "./ProductsView";
 
 class CartItem extends React.Component {
   constructor(props) {
@@ -23,16 +24,32 @@ class CartItem extends React.Component {
     this.getProductInfo(this.idRef.current);
   }
   async getProductInfo(id) {
-    var mock = new productsMock();
-    const product = await mock.getProductById(id);
-    this.nameRef.current = product.entity.name;
-    this.availableQuantityRef.current = product.entity.quantity;
-    this.eachPriceRef.current = product.entity.price;
-    const computedPrice = this.refleshPrice(this.state.quantity);
-    this.setState({
-      ...this.state,
-      price: computedPrice,
-    });
+    try {
+      const apiURL =
+        "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
+
+      const authAxios = axios.create({
+        baseURL: apiURL,
+      });
+      const response = await authAxios.get("products/", {
+        params: { productid: id },
+      });
+
+      const allProducts = response.data;
+      const product = allProducts.find((item) => item.id === id);
+      this.nameRef.current = product.name;
+      this.availableQuantityRef.current = product.quantity;
+      this.eachPriceRef.current = product.price;
+      const computedPrice = this.refleshPrice(this.state.quantity);
+
+      this.setState({
+        ...this.state,
+        price: computedPrice,
+      });
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się załadować produktu");
+    }
   }
 
   refleshPrice(quantity) {
@@ -114,5 +131,3 @@ class CartItem extends React.Component {
   }
 }
 export default CartItem;
-
-// aktualizacja ceny po zmianie stanu

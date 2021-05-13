@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
-import cartMock from "../utils/cartMock";
 import OrderSummary from "./OrderSummary";
+import { observer } from "mobx-react";
+import { decodeToken } from "react-jwt";
+import UserStore from "../stores/UserStore";
+import axios from "axios";
 
 class CartSummaryView extends React.Component {
   constructor(props) {
@@ -10,13 +13,13 @@ class CartSummaryView extends React.Component {
     this.handleBuy = this.handleBuy.bind(this);
     this.state = {
       items: [],
-      showSummary: false
+      showSummary: false,
     };
   }
 
   togglePopup() {
     this.setState({
-      showSummary: !this.state.showSummary
+      showSummary: !this.state.showSummary,
     });
   }
 
@@ -25,12 +28,35 @@ class CartSummaryView extends React.Component {
   }
 
   async getCart() {
-    const mock = new cartMock();
-    const cart_Mock = await mock.getCart();
-    this.setState({
-      ...this.state,
-      items: cart_Mock.entity.items,
-    });
+    try {
+      const apiURL =
+        "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
+      const token = UserStore.token;
+      const decodedToken = decodeToken(token);
+      console.log(token);
+      console.log(decodedToken);
+      console.log(decodedToken["user-id"]);
+      const authAxios = axios.create({
+        baseURL: apiURL,
+        headers: {
+          Authorization: token,
+        },
+      });
+      const response = await authAxios.get("cart/", {
+        params: { userid: decodedToken["user-id"] },
+      });
+
+      const cart = response.data.orderedProducts;
+      console.log(cart);
+
+      this.setState({
+        ...this.state,
+        items: cart,
+      });
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się załadować koszyka");
+    }
   }
 
   handleBuy(e) {
@@ -42,10 +68,12 @@ class CartSummaryView extends React.Component {
   render() {
     return (
       <div className="content">
-        {this.state.showSummary ?
-            <OrderSummary text="Podsumowanie" closePopup={this.togglePopup.bind(this)}>
-            </OrderSummary> : null
-          }
+        {this.state.showSummary ? (
+          <OrderSummary
+            text="Podsumowanie"
+            closePopup={this.togglePopup.bind(this)}
+          ></OrderSummary>
+        ) : null}
         <div className="row justify-content-center">
           <div className="col-md-6">
             {this.state.items.map((product) => (
@@ -75,4 +103,4 @@ class CartSummaryView extends React.Component {
   }
 }
 
-export default CartSummaryView;
+export default observer(CartSummaryView);
