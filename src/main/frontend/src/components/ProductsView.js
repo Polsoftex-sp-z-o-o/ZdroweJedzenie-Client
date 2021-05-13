@@ -2,9 +2,9 @@ import ReactDOM from "react-dom";
 import React from "react";
 import Search from "./Search";
 import Product from "./Product";
-import Fuse from "fuse.js"
-import CategoriesView from "./CategoriesView" 
-
+import Fuse from "fuse.js";
+import CategoriesView from "./CategoriesView";
+import axios from "axios";
 
 class ProductsView extends React.Component {
   constructor(props) {
@@ -15,46 +15,38 @@ class ProductsView extends React.Component {
     this.handleNavLast = this.handleNavLast.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-	this.handleCategories = this.handleCategories.bind(this);
-
-    this.mocked_products = [
-      {
-        id: "d290f1ee-6c54-4b01-90e6-d701748f0851",
-        name: "Masło",
-        price: "15$",
-        description: "Pyszne i tłuste.",
-        category: "Dairy",
-        quantity: 1000,
-      },
-      {
-        id: "d290f1ee-6c54-4b01-90e6-d701748f0852",
-        name: "Jabłka Champion",
-        price: "10 $/kg",
-        description: "Twarde ale słodiutkie.",
-        category: "Fruit",
-        quantity: 2317,
-      },
-      {
-        id: "d290f1ee-6c54-4b01-90e6-d701748f0853",
-        name: "Jabłka Zwykłe",
-        price: "9 $/kg",
-        description: "Twarde i kwaśne.",
-        category: "Fruit",
-        quantity: 69,
-      },
-      {
-        id: "d290f1ee-6c54-4b01-90e6-d701748f0854",
-        name: "Ksylitol",
-        price: "420 $/kg",
-        description: "Gdy masz nadmiar cukru bo jesteś zbyt słodki.",
-        category: "Fruit",
-        quantity: 100,
-      },
-    ];
+    this.handleCategories = this.handleCategories.bind(this);
 
     this.state = {
-      filteredProducts: this.mocked_products,
+      products: [],
+      filteredProducts: [],
     };
+  }
+
+  componentDidMount() {
+    this.getProducts();
+  }
+
+  async getProducts() {
+    try {
+      const response = await axios.get(
+        "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/products/",
+        null,
+        { "Content-Type": "application/json" }
+      );
+      const newProducts = response.data;
+
+      this.setState({
+        ...this.state,
+        products: newProducts,
+        filteredProducts: newProducts,
+      });
+      console.log(response);
+      console.log(this.state.products);
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się załadować produktów");
+    }
   }
 
   handleInput(e) {
@@ -92,33 +84,33 @@ class ProductsView extends React.Component {
 
   handleSearch(query, category) {
     this.setState({
+      ...this.state,
       filteredProducts: this.filterProducts(query, category),
     });
   }
-  
+
   handleCategories(categories) {
     this.setState({
+      ...this.state,
       filteredProducts: this.filterProductsByCategories(categories),
     });
   }
 
   filterProductsByCategories(categories) {
-    var candidates = this.mocked_products;
-	if(categories.length===0) return candidates;
-    candidates = this.mocked_products.filter(
-	  function(product){
-	    return categories.includes(product.category);
+    var candidates = this.state.products;
+    if (categories.length === 0) return candidates;
+    candidates = this.state.products.filter(function (product) {
+      return categories.includes(product.category);
     });
     return candidates;
   }
 
   filterProducts(query, category) {
-    var candidates = this.mocked_products;
-    if(category !== "All"){
-      candidates = this.mocked_products.filter(
-        function(product){
-          return product.category === category;
-      })
+    var candidates = this.state.products;
+    if (category !== "All") {
+      candidates = this.state.products.filter(function (product) {
+        return product.category === category;
+      });
     }
 
     if (!query) {
@@ -127,7 +119,7 @@ class ProductsView extends React.Component {
 
     const fuse = new Fuse(candidates, {
       keys: ["name", "description"],
-    })
+    });
     const result = fuse.search(query);
     const output = [];
 
@@ -151,7 +143,7 @@ class ProductsView extends React.Component {
 
     return (
       <div>
-	  	<CategoriesView parentHandler={this.handleCategories}/>
+        <CategoriesView parentHandler={this.handleCategories} />
         <Search parentHandler={this.handleSearch} />
         <div className="row">{products}</div>
       </div>
