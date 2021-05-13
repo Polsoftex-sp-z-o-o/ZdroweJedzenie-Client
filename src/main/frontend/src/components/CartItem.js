@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import ProductsView from "./ProductsView";
 
 class CartItem extends React.Component {
   constructor(props) {
