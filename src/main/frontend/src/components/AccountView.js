@@ -28,24 +28,17 @@ class AccountView extends React.Component {
 
   render() {
     return (
-      <div className="card bg-light">
-        <div className="card-body mx-auto" style={{ maxWidth: "80%" }}></div>
-        <h4 className="card-title mt-3 text-center">Twoje dane</h4>
-        <div className="container_account">
-          <div className="row align-items-center">
-            <blockquote className="quote-box">
-              <p className="quote-text">
-                <hr></hr>
-                <hr></hr>
-                <hr></hr>
-                <hr></hr>
-                <div>{this.state.address}</div>
-                <hr></hr>
-                <div>{this.state.name}</div>
-              </p>
-              <hr></hr>
-            </blockquote>
-          </div>
+      <div className="card">
+        <div className="card-body">
+          <h1 className="card-title">Twoje dane: </h1>
+          <h2 className="card-subtitle mb-2 text-muted">
+            {" "}
+            Godność: {this.state.name}{" "}
+          </h2>
+          <h2 className="card-text">
+            {" "}
+            Adres zamieszkania: {this.state.address}
+          </h2>
         </div>
       </div>
     );

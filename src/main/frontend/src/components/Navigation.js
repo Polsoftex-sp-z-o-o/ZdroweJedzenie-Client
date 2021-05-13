@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 
+
 class Navigation extends React.Component {
   constructor(props){
     super(props);
@@ -69,7 +70,7 @@ class Navigation extends React.Component {
             className="nav-item active"
             style={{ margin: "0px 10px 0px 10px" }}
           >
-            <button href="/logout" className="btn btn-outline-success">
+            <button href="/login" className="btn btn-outline-success">
               Zaloguj
             </button>
           </li>
