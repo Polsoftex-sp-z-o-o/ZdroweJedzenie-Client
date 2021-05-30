@@ -1,5 +1,6 @@
 import UsersMock from "../utils/usersMock";
 import React from "react";
+import HistoryOrders from "./HistoryOrders";
 
 class AccountView extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class AccountView extends React.Component {
             Adres zamieszkania: {this.state.address}
           </h2>
         </div>
+        <HistoryOrders></HistoryOrders>
       </div>
     );
   }

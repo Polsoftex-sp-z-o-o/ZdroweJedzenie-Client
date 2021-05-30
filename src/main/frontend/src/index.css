@@ -524,3 +524,19 @@ blockquote {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+/* HISTORY */
+.history_orders {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.history_item_date {
+  text-align: center;
+  margin: auto;
+}
+
+.history_item_price {
+  margin-left: 20px;
+}
