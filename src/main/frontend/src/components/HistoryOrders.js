@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { decodeToken } from "react-jwt";
 import UserStore from "../stores/UserStore";
 import axios from "axios";
-import responsePromise from "rest/util/responsePromise";
 
 class HistoryProduct extends React.Component {
     constructor(props) {
