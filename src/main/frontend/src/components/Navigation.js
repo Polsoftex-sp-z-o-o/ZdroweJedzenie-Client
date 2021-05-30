@@ -38,13 +38,15 @@ class Navigation extends React.Component {
       );
     }
 
-    leftMenuLinks.push(
-      <Link key="cart" to="/cart">
-        <li className="nav-item active" style={{ margin: "0px 10px 0px 10px" }}>
-          <span className="nav-link">Koszyk</span>
-        </li>
-      </Link>
-    );
+    if(UserStore.isLoggedIn){
+      leftMenuLinks.push(
+        <Link key="cart" to="/cart">
+          <li className="nav-item active" style={{ margin: "0px 10px 0px 10px" }}>
+            <span className="nav-link">Koszyk</span>
+          </li>
+        </Link>
+      );
+    }
 
     const rightMenuLinks = [];
 
