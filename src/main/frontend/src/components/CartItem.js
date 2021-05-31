@@ -80,25 +80,24 @@ class CartItem extends React.Component {
 
   async deleteItem() {
     try {
-      // const apiURL =
-      //   "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
-      // const token = UserStore.token;
-      // const decodedToken = decodeToken(token);
+      const apiURL =
+        "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
+      const token = UserStore.token;
+      const decodedToken = decodeToken(token);
 
-      // const authAxios = axios.create({
-      //   baseURL: apiURL,
-      //   headers: {
-      //     Authorization: token,
-      //   },
-      // });
-      // const response = await authAxios.delete("cart/", {
-      //   params: {
-      //     userid: decodedToken["user-id"],
-      //     productId: this.idRef.current,
-      //   },
-      // });
+      const authAxios = axios.create({
+        baseURL: apiURL,
+        headers: {
+          Authorization: token,
+        },
+      });
+      const response = await authAxios.delete(`cart/${this.idRef.current}/`, {
+        params: {
+          userid: decodedToken["user-id"],
+        },
+      });
 
-      // console.log(response);
+      console.log(response);
 
       this.props.deleteHandler();
     } catch (err) {

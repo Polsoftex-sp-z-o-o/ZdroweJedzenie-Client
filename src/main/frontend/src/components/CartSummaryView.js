@@ -51,7 +51,7 @@ class CartSummaryView extends React.Component {
         "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
       const token = UserStore.token;
       const decodedToken = decodeToken(token);
-      console.log(decodedToken["user-id"]);
+      // console.log(decodedToken["user-id"]);
       const authAxios = axios.create({
         baseURL: apiURL,
         headers: {
@@ -93,7 +93,7 @@ class CartSummaryView extends React.Component {
         <div className="row justify-content-center">
           <div className="col-md-6">
             {this.state.items.map((product) => {
-              console.log(product);
+              // console.log(product);
               return (
                 <CartItem
                   key={product.productId}
