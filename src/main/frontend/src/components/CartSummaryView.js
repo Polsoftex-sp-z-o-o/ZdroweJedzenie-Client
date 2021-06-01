@@ -11,16 +11,34 @@ class CartSummaryView extends React.Component {
   constructor(props) {
     super(props);
     this.handleBuy = this.handleBuy.bind(this);
+    this.handleItems = this.handleItems.bind(this);
+    this.handleItemDelete = this.handleItemDelete.bind(this);
     this.state = {
       items: [],
       showSummary: false,
     };
+    this.isItemDeleted = false;
   }
+
+  handleItemDelete() {
+    this.setState({ isItemDeleted: true });
+  }
+  handleItems(item) {}
 
   togglePopup() {
     this.setState({
       showSummary: !this.state.showSummary,
     });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapShot) {
+    if (this.state.isItemDeleted === true) {
+      console.log("cart items reload triggered");
+      this.getCart();
+
+      this.setState({ isItemDeleted: false });
+      console.log("load after delete");
+    }
   }
 
   componentDidMount() {
@@ -33,9 +51,7 @@ class CartSummaryView extends React.Component {
         "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
       const token = UserStore.token;
       const decodedToken = decodeToken(token);
-      console.log(token);
-      console.log(decodedToken);
-      console.log(decodedToken["user-id"]);
+      // console.log(decodedToken["user-id"]);
       const authAxios = axios.create({
         baseURL: apiURL,
         headers: {
@@ -47,7 +63,7 @@ class CartSummaryView extends React.Component {
       });
 
       const cart = response.data.orderedProducts;
-      console.log(cart);
+      // console.log(cart);
 
       this.setState({
         ...this.state,
@@ -76,9 +92,16 @@ class CartSummaryView extends React.Component {
         ) : null}
         <div className="row justify-content-center">
           <div className="col-md-6">
-            {this.state.items.map((product) => (
-              <CartItem key={product.productId} product={product} />
-            ))}
+            {this.state.items.map((product) => {
+              // console.log(product);
+              return (
+                <CartItem
+                  key={product.productId}
+                  product={product}
+                  deleteHandler={this.handleItemDelete}
+                />
+              );
+            })}
           </div>
         </div>
 

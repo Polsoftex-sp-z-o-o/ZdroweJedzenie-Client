@@ -1,5 +1,8 @@
 import React from "react";
 import axios from "axios";
+import { observer } from "mobx-react";
+import { decodeToken } from "react-jwt";
+import UserStore from "../stores/UserStore";
 
 class CartItem extends React.Component {
   constructor(props) {
@@ -75,8 +78,32 @@ class CartItem extends React.Component {
     }
   }
 
-  deleteItem() {
-    console.log("item delete requested");
+  async deleteItem() {
+    try {
+      const apiURL =
+        "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
+      const token = UserStore.token;
+      const decodedToken = decodeToken(token);
+
+      const authAxios = axios.create({
+        baseURL: apiURL,
+        headers: {
+          Authorization: token,
+        },
+      });
+      const response = await authAxios.delete(`cart/${this.idRef.current}/`, {
+        params: {
+          userid: decodedToken["user-id"],
+        },
+      });
+
+      console.log(response);
+
+      this.props.deleteHandler();
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się usunąć produktu z koszyka");
+    }
   }
 
   buy() {
@@ -129,4 +156,4 @@ class CartItem extends React.Component {
     );
   }
 }
-export default CartItem;
+export default observer(CartItem);
