@@ -5,6 +5,9 @@ import Product from "./Product";
 import Fuse from "fuse.js";
 import CategoriesView from "./CategoriesView";
 import axios from "axios";
+import UserStore from "../stores/UserStore";
+import { observer } from "mobx-react";
+import AddProductCard from "./AddProductCard";
 
 class ProductsView extends React.Component {
   constructor(props) {
@@ -16,10 +19,15 @@ class ProductsView extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleCategories = this.handleCategories.bind(this);
+    // console.log(UserStore.authorities);
+    const isAdmin =
+      UserStore.authorities && UserStore.authorities.includes("ROLE_ADMIN");
+    // console.log("Czy to admin", isAdmin);
 
     this.state = {
       products: [],
       filteredProducts: [],
+      isAdmin: isAdmin,
     };
   }
 
@@ -41,8 +49,8 @@ class ProductsView extends React.Component {
         products: newProducts,
         filteredProducts: newProducts,
       });
-      console.log(response);
-      console.log(this.state.products);
+      // console.log(response);
+      // console.log(this.state.products);
     } catch (err) {
       console.warn(err);
       alert("Nie udało się załadować produktów");
@@ -131,6 +139,7 @@ class ProductsView extends React.Component {
   }
 
   render() {
+    // this.state.isAdmin && {};
     const products = this.state.filteredProducts.map((product) => (
       <Product
         key={product.id}
@@ -145,7 +154,11 @@ class ProductsView extends React.Component {
       <div>
         <CategoriesView parentHandler={this.handleCategories} />
         <Search parentHandler={this.handleSearch} />
-        <div className="row">{products}</div>
+
+        <div className="row">
+          <AddProductCard />
+          {products}
+        </div>
       </div>
     );
   }
