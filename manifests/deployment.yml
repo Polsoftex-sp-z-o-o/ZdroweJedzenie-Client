@@ -18,7 +18,7 @@ spec:
         app: zdrowejedzenie-client
     spec:
       containers:
-        - image: polsoftexregistry.azurecr.io/zdrowejedzenie-client:latest
+        - image: polregistry.azurecr.io/zdrowejedzenie-client:latest
           name: zdrowejedzenie-client
           resources: {}
 status: {}
