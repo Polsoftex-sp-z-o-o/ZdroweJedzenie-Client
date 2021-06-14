@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    // Default 10px
+    font-size: 62.5%;
+}
+
+body {
+    margin-top: 3em;
+    margin-bottom: 60px;
+    font-size: 1.6rem;
+}

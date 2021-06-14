@@ -103,74 +103,72 @@ class RegisterView extends React.Component {
 
   render() {
     return (
-      <div className="container_outer">
-        <div id="left_container_logo" className="container_logo">
+      <section className="reg-panel">
+        <div className="reg-panel__logo">
           <Logo text="Zdrowe Jedzenie jest najlepszym w kraju dostawcą pożywienia spełniającego wymagania wymagających smakoszy bedąc przy tym tanią i zdrową alternatywą dla sztucznie hodowanych produktów. Zarejestruj się i żyj zdrowo już dziś!" />
         </div>
-        <div id="right_container_register" className="container_register">
-          <form className="register_form" onSubmit={this.handleSubmit}>
-            <label className="register_form__label">adres email</label>
-            <input
-              className="register_form__input"
-              name="email"
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              required
-            />
-            <label className="register_form__label">hasło</label>
-            <input
-              className="register_form__input"
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              required
-            />
-            <label className="register_form__label">Potwierdź hasło</label>
-            <input
-              className="register_form__input"
-              name="passwordConfirmation"
-              type="password"
-              value={this.state.passwordConfirmation}
-              onChange={this.handleChange}
-              required
-            />
-            <label className="register_form__label">Imię</label>
-            <input
-              className="register_form__input"
-              name="firstName"
-              type="text"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-              required
-            />
-            <label className="register_form__label">Nazwisko</label>
-            <input
-              className="register_form__input"
-              name="lastName"
-              type="text"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-              required
-            />
-            <label className="register_form__label">Adres zamieszkania</label>
-            <input
-              className="register_form__input"
-              name="address"
-              type="text"
-              value={this.state.address}
-              onChange={this.handleChange}
-              required
-            />
-            <input
-              className="register_form__submit"
-              type="submit"
-              value="Zarejestruj"
-            />
-          </form>
-        </div>
-      </div>
+        <form className="form" onSubmit={this.handleSubmit}>
+          <label className="form__label">adres email</label>
+          <input
+            className="form__input"
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            required
+          />
+          <label className="form__label">hasło</label>
+          <input
+            className="form__input"
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+            required
+          />
+          <label className="form__label">Potwierdź hasło</label>
+          <input
+            className="form__input"
+            name="passwordConfirmation"
+            type="password"
+            value={this.state.passwordConfirmation}
+            onChange={this.handleChange}
+            required
+          />
+          <label className="form__label">Imię</label>
+          <input
+            className="form__input"
+            name="firstName"
+            type="text"
+            value={this.state.firstName}
+            onChange={this.handleChange}
+            required
+          />
+          <label className="form__label">Nazwisko</label>
+          <input
+            className="form__input"
+            name="lastName"
+            type="text"
+            value={this.state.lastName}
+            onChange={this.handleChange}
+            required
+          />
+          <label className="form__label">Adres zamieszkania</label>
+          <input
+            className="form__input"
+            name="address"
+            type="text"
+            value={this.state.address}
+            onChange={this.handleChange}
+            required
+          />
+          <input
+            className="form__submit"
+            type="submit"
+            value="Zarejestruj"
+          />
+        </form>
+      </section>
     );
   }
 }

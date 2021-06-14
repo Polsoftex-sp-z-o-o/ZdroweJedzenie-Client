@@ -1,0 +1,32 @@
+.home {
+    &__title {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .quote-box {
+        overflow: hidden;
+        width: auto;
+        display: table;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 17px;
+        background-color: #4adfcc;
+        margin-top: 25px;
+        color: white;
+        box-shadow: 3px 3px 3px 3px #e0e0e0;
+    }
+      
+    .quotation-mark {
+        margin-top: -10px;
+        font-weight: bold;
+        font-size: 100px;
+        color: white;
+        font-family: "Times New Roman", Georgia, Serif;
+    }
+      
+    .quote-text {
+        font-size: 19px;
+        margin-top: -65px;
+    }
+}

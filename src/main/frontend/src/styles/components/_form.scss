@@ -1,0 +1,61 @@
+.form {
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60rem;
+    max-height: auto;
+    border-radius: 8px;
+    padding: 2rem 3rem;
+    box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
+
+    &__label {
+        text-transform: capitalize;
+        font-size: 1.8rem;
+        opacity: 0.7; 
+    }
+
+    &__input {
+        border: 0.1rem rgba(0, 0, 0, 0.1) solid;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__submit {
+        padding: 1.6rem 3rem;
+        border: none;
+        border-radius: 8px;
+        background-color: $color-pri;
+        color: white;
+        margin-top: 1.4rem;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            transform: scale(1.01) translateY(-1px);
+            transition: all 0.2s ease-in;
+            box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+            transform: scale(0.99) translateY(1px);
+        }
+    }
+
+    &__info {
+        font-size: 1.4rem;
+        margin-top: 0.3rem;
+
+        a {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: $color-pri;
+        }
+    }
+}

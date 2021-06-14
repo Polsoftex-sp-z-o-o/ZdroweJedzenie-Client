@@ -32,27 +32,22 @@ class HomeView extends React.Component {
 
   render() {
     return (
-      <div className="card bg-light">
-        <div className="card-body mx-auto" style={{ maxWidth: "80%" }}></div>
-        <h4 className="card-title mt-3 text-center">
+      <section className="home">
+        <h4 className="home__title">
           Witaj w sklepie ze zdrowym jedzeniem!
         </h4>
-        <div className="container">
-          <div className="row align-items-center">
-            <blockquote className="quote-box">
-              <p className="quotation-mark">“</p>
-              <p className="quote-text">{this.state.quote}</p>
-              <hr></hr>
-              <div className="blog-post-actions">
-                <p className="blog-post-bottom pull-left">
-                  {" "}
-                  {this.state.author}{" "}
-                </p>
-              </div>
-            </blockquote>
+        <blockquote className="quote-box">
+          <p className="quotation-mark">“</p>
+          <p className="quote-text">{this.state.quote}</p>
+          <hr></hr>
+          <div className="blog-post-actions">
+            <p className="blog-post-bottom pull-left">
+              {" "}
+              {this.state.author}{" "}
+            </p>
           </div>
-        </div>
-      </div>
+        </blockquote>
+      </section>
     );
   }
 }

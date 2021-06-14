@@ -4,12 +4,8 @@ class Footer extends React.Component {
   render() {
     return (
       <footer className="footer">
-        <div className="container">
-          <span className="text-muted">
-            @Polsoftex - Programowanie Zespołowe 2021-{" "}
-            <a href="mailto:admin@polsoftex.pl">admin@polsoftex.pl</a>
-          </span>
-        </div>
+        <p> @Polsoftex - Programowanie Zespołowe 2021 </p>
+        <a href="mailto:admin@polsoftex.pl">admin@polsoftex.pl</a>
       </footer>
     );
   }

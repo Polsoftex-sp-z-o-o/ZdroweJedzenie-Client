@@ -19,23 +19,21 @@ class Search extends React.Component {
   }
 
   render() {
-    return (
-      <div className="search-bar">
-        <div className="input-group">
-          <input
-            className="form-control"
-            type="text"
-            onChange={this.handleInputOnChange}
-            placeholder="Szukaj"
-          />
-          <span className="input-group-addon"></span>
-          <select className="form-control" onChange={this.handleSelectOnChange}>
-            <option value="All">Wszystko</option>
-            <option value="Fruit">Owoce</option>
-            <option value="Vegetable">Warzywa</option>"
-            <option value="Dairy">Nabiał</option>
-          </select>
-        </div>
+    return (   
+      <div className="input-group">
+        <input
+          className="form-control"
+          type="text"
+          onChange={this.handleInputOnChange}
+          placeholder="Szukaj"
+        />
+        <span className="input-group-addon"></span>
+        <select className="form-control" onChange={this.handleSelectOnChange}>
+          <option value="All">Wszystko</option>
+          <option value="Fruit">Owoce</option>
+          <option value="Vegetable">Warzywa</option>"
+          <option value="Dairy">Nabiał</option>
+        </select>
       </div>
     );
   }

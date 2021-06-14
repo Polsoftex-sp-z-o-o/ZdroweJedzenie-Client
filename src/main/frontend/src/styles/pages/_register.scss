@@ -1,0 +1,25 @@
+.reg-panel {
+    width: 100%;
+    min-height: 80vh;
+    padding: 0 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__logo {
+        flex: 0 0 49%;
+        padding: 0 7rem;
+        text-align: justify;
+
+        img {
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+            max-width: 30rem;
+        }
+    }
+
+    .form {
+        flex: 0 0 49%;
+    }
+}
