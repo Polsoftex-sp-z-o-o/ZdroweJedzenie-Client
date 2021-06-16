@@ -5,15 +5,28 @@ import { decodeToken } from "react-jwt";
 import UserStore from "../stores/UserStore";
 
 class AddProductCard extends React.Component {
+  showDeleteOption = true;
   constructor(props) {
     super(props);
+    console.log(props);
+    this.showDeleteOption = true;
+    console.log("Renderuje");
+    console.log(this.props.product);
+
     this.state = {
-      quantity: 0,
-      category: "",
-      name: "",
-      price: 0,
-      description: "",
+      id: this.props.product.id || "",
+      name: this.props.product.name || "",
+      quantity: this.props.product.quantity || "",
+      category: this.props.product.category || "",
+
+      price: this.props.product.price || 0,
+      description: this.props.product.description || "",
     };
+    if (this.props.product.id === "") {
+      this.showDeleteOption = false;
+    }
+    console.log("Show delete button");
+    console.log(this.showDeleteOption);
   }
 
   async addNewProduct() {
@@ -56,6 +69,78 @@ class AddProductCard extends React.Component {
     } catch (err) {
       console.warn(err);
       alert("Nie udało się dodać nowego produktu");
+    }
+  }
+
+  async deleteItem() {
+    try {
+      const apiURL =
+        "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/";
+      const token = UserStore.token;
+      const decodedToken = decodeToken(token);
+
+      const authAxios = axios.create({
+        baseURL: apiURL,
+        headers: {
+          Authorization: token,
+        },
+      });
+      const response = await authAxios.delete(
+        `products/${this.props.product.id}/`,
+        {
+          params: {
+            userid: decodedToken["user-id"],
+          },
+        }
+      );
+
+      console.log(response);
+
+      this.props.reload();
+      alert("Usunieto produkt");
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się usunąć produktu");
+    }
+  }
+
+  async EditProduct() {
+    try {
+      const apiURL =
+        "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/";
+      const token = UserStore.token;
+      const decodedToken = decodeToken(token);
+
+      const authAxios = axios.create({
+        baseURL: apiURL,
+        headers: {
+          Authorization: token,
+        },
+      });
+      const response = await authAxios.put(
+        `products/${this.props.product.id}/`,
+        {
+          name: this.state.name,
+          description: this.state.description,
+          category: this.state.category,
+          quantity: this.state.quantity,
+          price: this.state.price,
+        },
+        {
+          "Content-Type": "application/json",
+          params: {
+            userid: decodedToken["user-id"],
+          },
+        }
+      );
+
+      console.log(response);
+
+      this.props.reload();
+      alert("Edytowano produkt");
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się edytować produktu");
     }
   }
 
@@ -124,7 +209,7 @@ class AddProductCard extends React.Component {
                   type="number"
                   min="0"
                   size="7"
-                  step="1"
+                  step="0.1"
                   value={this.state.price}
                   onChange={this.handlePriceInput.bind(this)}
                   className="col-md-6 p-0"
@@ -141,8 +226,8 @@ class AddProductCard extends React.Component {
             />
           </div>
           <div className="card-footer d-flex align-items-center justify-content-between">
-            <small className="col-md-3 text-muted"> Dostępna ilość</small>
-            <div className="col-md-6 justify-content-around">
+            <small className="col-md-4 text-muted"> Dostępna ilość</small>
+            <div className="col-md-8 d-flex justify-content-between">
               <input
                 type="number"
                 min="0"
@@ -150,16 +235,37 @@ class AddProductCard extends React.Component {
                 step="1"
                 value={this.state.quantity}
                 onChange={this.handleQuantityInput.bind(this)}
-                className="col-md-4 p-0"
+                className="col-md-2 p-0"
               />
-              <button
-                id="save"
-                key="save"
-                className="col-md-4 btn btn-info"
-                onClick={this.addNewProduct.bind(this)}
-              >
-                save
-              </button>
+              {this.showDeleteOption && (
+                <button
+                  id="delete"
+                  key="delete"
+                  className="col-md-2 btn btn-info"
+                  onClick={this.deleteItem.bind(this)}
+                >
+                  <i className="fas fa-trash-alt"></i>
+                </button>
+              )}
+              {this.showDeleteOption ? (
+                <button
+                  id="save"
+                  key="save"
+                  className="col-md-2 btn btn-info"
+                  onClick={this.EditProduct.bind(this)}
+                >
+                  save
+                </button>
+              ) : (
+                <button
+                  id="save"
+                  key="save"
+                  className="col-md-2 btn btn-info"
+                  onClick={this.addNewProduct.bind(this)}
+                >
+                  save
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -167,5 +273,16 @@ class AddProductCard extends React.Component {
     );
   }
 }
+
+AddProductCard.defaultProps = {
+  product: {
+    id: "",
+    quantity: 0,
+    category: "",
+    name: "",
+    price: 0,
+    description: "",
+  },
+};
 
 export default observer(AddProductCard);

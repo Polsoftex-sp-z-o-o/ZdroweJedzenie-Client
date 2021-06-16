@@ -27,8 +27,6 @@ class ProductsView extends React.Component {
     this.state = {
       products: [],
       filteredProducts: [],
-      toogleRefresh: false,
-      // isAdmin: isAdmin,
     };
   }
 
@@ -131,8 +129,11 @@ class ProductsView extends React.Component {
     }
 
     const fuse = new Fuse(candidates, {
-      keys: [{name: "name", weight: 0.7}, {name: "description", weight: 0.3}],
-      threshold: 0.4
+      keys: [
+        { name: "name", weight: 0.7 },
+        { name: "description", weight: 0.3 },
+      ],
+      threshold: 0.4,
     });
     const result = fuse.search(query);
     const output = [];
@@ -145,15 +146,24 @@ class ProductsView extends React.Component {
   }
 
   render() {
-    const products = this.state.filteredProducts.map((product) => (
-      <Product
-        key={product.id}
-        product={product}
-        onReserve={this.props.onReserve}
-        onUpdate={this.props.onUpdate}
-        onDelete={this.props.onDelete}
-      />
-    ));
+    const products = this.state.filteredProducts.map((product) => {
+      // console.log(product);
+      return UserStore.isAdmin ? (
+        <AddProductCard
+          key={product.id}
+          product={product}
+          reload={this.getProducts.bind(this)}
+        />
+      ) : (
+        <Product
+          key={product.id}
+          product={product}
+          onReserve={this.props.onReserve}
+          onUpdate={this.props.onUpdate}
+          onDelete={this.props.onDelete}
+        />
+      );
+    });
 
     return (
       <div>
