@@ -7,9 +7,8 @@ import UserStore from "../stores/UserStore";
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
-    this.refleshPrice = this.refleshPrice.bind(this);
-    this.increaseAmount = this.increaseAmount.bind(this);
-    this.decreaseAmount = this.decreaseAmount.bind(this);
+    this.refleshPrice = this.refreshPrice.bind(this);
+    this.handleQuantityInput = this.handleQuantityInput.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
 
     this.state = {
@@ -22,9 +21,11 @@ class CartItem extends React.Component {
     this.availableQuantityRef = React.createRef();
     this.eachPriceRef = React.createRef();
   }
+
   componentDidMount() {
     this.getProductInfo(this.idRef.current);
   }
+
   async getProductInfo(id) {
     try {
       const apiURL =
@@ -42,7 +43,7 @@ class CartItem extends React.Component {
       this.nameRef.current = product.name;
       this.availableQuantityRef.current = product.quantity;
       this.eachPriceRef.current = product.price;
-      const computedPrice = this.refleshPrice(this.state.quantity);
+      const computedPrice = this.refreshPrice(this.state.quantity);
 
       this.setState({
         ...this.state,
@@ -54,28 +55,44 @@ class CartItem extends React.Component {
     }
   }
 
-  refleshPrice(quantity) {
+  refreshPrice(quantity) {
     let newPrice = this.eachPriceRef.current * quantity;
     newPrice = newPrice.toFixed(2);
     return newPrice;
   }
 
-  increaseAmount() {
-    console.log("increase");
-    if (this.state.quantity <= this.availableQuantityRef.current) {
-      const increasedAmount = this.state.quantity + 1;
-      const newPrice = this.refleshPrice(increasedAmount);
-      this.setState({ quantity: increasedAmount, price: newPrice });
-    }
-  }
+  async handleQuantityInput(event) {
+    const newQuantity = event.target.value;
+    const newPrice = this.refreshPrice(newQuantity);
 
-  decreaseAmount() {
-    console.log("decrease");
-    if (this.state.quantity > 0) {
-      const decreasedAmount = this.state.quantity - 1;
-      const newPrice = this.refleshPrice(decreasedAmount);
-      this.setState({ quantity: decreasedAmount, price: newPrice });
-    }
+    this.setState({ quantity: newQuantity, price: newPrice });
+
+    const apiURL = "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/";
+    const token = UserStore.token;
+    const decodedToken = decodeToken(token);
+
+    const authAxios = axios.create({
+      baseURL: apiURL,
+      headers: {
+        Authorization: token,
+      },
+    });
+    const response = await authAxios.post(
+      `cart/`,
+      {
+        productId: this.idRef.current,
+        quantity: this.state.quantity,
+      },
+      {
+        "Content-Type": "application/json",
+        params: {
+          userid: decodedToken["user-id"],
+        },
+      });
+
+    // TODO: Error handling
+
+    console.log(response);
   }
 
   async deleteItem() {
@@ -106,10 +123,6 @@ class CartItem extends React.Component {
     }
   }
 
-  buy() {
-    console.log("buy request");
-  }
-
   render() {
     return (
       <div className="cart_container row mt-2 justify-content-between align-items-center">
@@ -124,21 +137,17 @@ class CartItem extends React.Component {
           {this.nameRef.current}
         </div>
         <div className="col-md-2 row justify-content-around">
-          <button
-            className="cart_delete_btn col-md-2 row justify-content-center align-items-center"
-            onClick={this.decreaseAmount}
-          >
-            <i className="fas fa-minus"></i>
-          </button>
-          <div className="col-md-2 row justify-content-center ">
-            {this.state.quantity}
-          </div>
-          <button
-            className="cart_delete_btn col-md-2 row justify-content-center align-items-center"
-            onClick={this.increaseAmount}
-          >
-            <i className="fas fa-plus"></i>
-          </button>
+          {/* TODO: better min width */}
+          <input
+            style={{ minWidth: 2 + 'em' }}
+            type="number"
+            min="0"
+            size="7"
+            step="1"
+            value={this.state.quantity}
+            onChange={this.handleQuantityInput}
+            className="col-md-4 p-0"
+          />
         </div>
         <div className="col-md-2 row justify-content-center">
           <button
