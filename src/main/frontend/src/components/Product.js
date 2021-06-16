@@ -16,7 +16,7 @@ class Product extends React.Component {
     if (this.state.amountToCart > 0) {
       try {
         const apiURL =
-          "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
+          "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/";
         const token = UserStore.token;
         const decodedToken = decodeToken(token);
         const authAxios = axios.create({
