@@ -26,7 +26,7 @@ class Product extends React.Component {
             Authorization: token,
           },
         });
-        const response = await authAxios.post(
+        await authAxios.post(
           "cart/",
           {
             productId: this.props.product.id,

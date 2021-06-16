@@ -51,9 +51,7 @@ class ProductImage extends React.Component {
 
         const imageSource = "data:image/png;base64," + this.state.image
 
-        return (
-            <img className="card-img-top" src={imageSource}></img>
-        )
+        return <img className="card-img-top" src={imageSource} alt=""></img>;
     }
 
 }
