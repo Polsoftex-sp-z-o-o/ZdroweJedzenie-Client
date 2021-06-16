@@ -22,7 +22,7 @@ class AddProductCard extends React.Component {
       const apiURL =
         "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/";
       const token = UserStore.token;
-      const decodedToken = decodeToken(token);
+      decodeToken(token);
       const authAxios = axios.create({
         baseURL: apiURL,
         headers: {
