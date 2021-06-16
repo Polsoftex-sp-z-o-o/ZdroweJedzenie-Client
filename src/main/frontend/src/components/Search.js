@@ -6,6 +6,9 @@ class Search extends React.Component {
     this.parentHandler = this.props.handler;
     this.query = "";
     this.category = "All";
+
+    console.log("contructor")
+    console.log(this.props.categories)
   }
 
   handleInputOnChange = (event) => {
@@ -16,6 +19,14 @@ class Search extends React.Component {
   handleSelectOnChange = (event) => {
     this.category = event.target.value;
     this.props.parentHandler(this.query, this.category)
+  }
+
+  createOptions() {
+    return (
+      this.props.categories.map((category, index) => {
+        return <option key={category} value={category}>{category}</option>
+      })
+    );
   }
 
   render() {
@@ -31,9 +42,7 @@ class Search extends React.Component {
           <span className="input-group-addon"></span>
           <select className="form-control" onChange={this.handleSelectOnChange}>
             <option value="All">Wszystko</option>
-            <option value="Fruit">Owoce</option>
-            <option value="Vegetable">Warzywa</option>"
-            <option value="Dairy">Nabiał</option>
+            {this.createOptions()}
           </select>
         </div>
       </div>
