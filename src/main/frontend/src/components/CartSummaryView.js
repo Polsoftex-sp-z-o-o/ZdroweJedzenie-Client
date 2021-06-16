@@ -11,6 +11,7 @@ class CartSummaryView extends React.Component {
   constructor(props) {
     super(props);
     this.handleBuy = this.handleBuy.bind(this);
+    this.handleClear = this.handleClear.bind(this);
     this.handleItems = this.handleItems.bind(this);
     this.handleItemDelete = this.handleItemDelete.bind(this);
     this.state = {
@@ -23,7 +24,7 @@ class CartSummaryView extends React.Component {
   handleItemDelete() {
     this.setState({ isItemDeleted: true });
   }
-  handleItems(item) {}
+  handleItems(item) { }
 
   togglePopup() {
     this.setState({
@@ -81,6 +82,34 @@ class CartSummaryView extends React.Component {
     this.togglePopup();
   }
 
+  async handleClear(e) {
+    e.preventDefault();
+    console.log("Clear request");
+
+    const apiURL =
+      "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/";
+    const token = UserStore.token;
+    const decodedToken = decodeToken(token);
+    const authAxios = axios.create({
+      baseURL: apiURL,
+      headers: {
+        Authorization: token,
+      },
+    });
+    const response = await authAxios.delete("cart/", {
+      params: { userid: decodedToken["user-id"] },
+    });
+
+    const cart = [];
+
+    // TODO: Error handling
+
+    this.setState({
+      ...this.state,
+      items: cart,
+    });
+  }
+
   render() {
     return (
       <div className="content">
@@ -118,6 +147,13 @@ class CartSummaryView extends React.Component {
               onClick={this.handleBuy}
             >
               Kup
+            </button>
+            <button
+              className="login_form__submit"
+              type="submit"
+              onClick={this.handleClear}
+            >
+              Wyczyść
             </button>
           </div>
         </div>
