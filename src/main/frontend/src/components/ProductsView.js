@@ -27,7 +27,7 @@ class ProductsView extends React.Component {
       products: [],
       filteredProducts: [],
       toogleRefresh: false,
-      categories: []
+      categories: [],
     };
   }
 
@@ -69,10 +69,11 @@ class ProductsView extends React.Component {
         { "Content-Type": "application/json" }
       );
       //const newProducts = response.data;
- 
-      console.log(response.data)
+      
+      console.log(response.data);
       this.setState({
-        categories: response.data
+        categories: response.data,
+
       });
       // this.setState({
       //   ...this.state,
@@ -132,7 +133,7 @@ class ProductsView extends React.Component {
     this.setState({
       ...this.state,
       filteredProducts: this.filterProductsByCategories(categories),
-      categories_from_products: this.getCategories()
+      categories_from_products: this.getCategories(),
     });
   }
 
@@ -158,8 +159,11 @@ class ProductsView extends React.Component {
     }
 
     const fuse = new Fuse(candidates, {
-      keys: [{name: "name", weight: 0.7}, {name: "description", weight: 0.3}],
-      threshold: 0.4
+      keys: [
+        { name: "name", weight: 0.7 },
+        { name: "description", weight: 0.3 },
+      ],
+      threshold: 0.4,
     });
     const result = fuse.search(query);
     const output = [];
@@ -171,32 +175,48 @@ class ProductsView extends React.Component {
     return output;
   }
 
-  getCategories(){
+  getCategories() {
     var categories = [];
     this.state.products.forEach(function (product) {
-        if(!categories.includes(product.category)) categories.push(product.category);
+      if (!categories.includes(product.category))
+        categories.push(product.category);
     });
+    
     console.log("KATEGORIE");
     console.log(categories);
     return categories;
   }
 
   render() {
-    const products = this.state.filteredProducts.map((product) => (
-      <Product
-        key={product.id}
-        product={product}
-        onReserve={this.props.onReserve}
-        onUpdate={this.props.onUpdate}
-        onDelete={this.props.onDelete}
-      />
-    ));
+    const products = this.state.filteredProducts.map((product) => {
+      // console.log(product);
+      return UserStore.isAdmin ? (
+        <AddProductCard
+          key={product.id}
+          product={product}
+          reload={this.getProducts.bind(this)}
+        />
+      ) : (
+        <Product
+          key={product.id}
+          product={product}
+          onReserve={this.props.onReserve}
+          onUpdate={this.props.onUpdate}
+          onDelete={this.props.onDelete}
+        />
+      );
+    });
 
     return (
       <div>
-
-        <CategoriesView parentHandler={this.handleCategories} categories_from_products={this.state.categories}/>
-        <Search parentHandler={this.handleSearch} categories={this.state.categories}/>
+        <CategoriesView
+          parentHandler={this.handleCategories}
+          categories_from_products={this.state.categories}
+        />
+        <Search
+          parentHandler={this.handleSearch}
+          categories={this.state.categories}
+        />
 
         <div className="row">
           {UserStore.isAdmin && (
