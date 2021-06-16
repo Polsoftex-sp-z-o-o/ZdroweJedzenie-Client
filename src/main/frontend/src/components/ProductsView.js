@@ -20,13 +20,14 @@ class ProductsView extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleCategories = this.handleCategories.bind(this);
     console.log(UserStore.isAdmin);
-    // const isAdmin =
-    //   UserStore.authorities && UserStore.authorities.includes("ROLE_ADMIN");
-    // console.log("Czy to admin", isAdmin);
+
+    this.getCategories = this.getCategories.bind(this);
 
     this.state = {
       products: [],
       filteredProducts: [],
+      toogleRefresh: false,
+      categories: [],
     };
   }
 
@@ -52,6 +53,32 @@ class ProductsView extends React.Component {
         products: newProducts,
         filteredProducts: newProducts,
       });
+
+      console.log(response);
+      console.log(this.state.products);
+      this.getCategories();
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się załadować produktów");
+    }
+
+    try {
+      const response = await axios.get(
+        "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/products/getAllCategories/",
+        null,
+        { "Content-Type": "application/json" }
+      );
+      //const newProducts = response.data;
+
+      console.log(response.data);
+      this.setState({
+        categories: response.data,
+      });
+      // this.setState({
+      //   ...this.state,
+      //   products: newProducts,
+      //   filteredProducts: newProducts,
+      // });
       // console.log(response);
       // console.log(this.state.products);
     } catch (err) {
@@ -104,6 +131,7 @@ class ProductsView extends React.Component {
     this.setState({
       ...this.state,
       filteredProducts: this.filterProductsByCategories(categories),
+      categories_from_products: this.getCategories(),
     });
   }
 
@@ -145,6 +173,17 @@ class ProductsView extends React.Component {
     return output;
   }
 
+  getCategories() {
+    var categories = [];
+    this.state.products.forEach(function (product) {
+      if (!categories.includes(product.category))
+        categories.push(product.category);
+    });
+    console.log("KATEGORIE");
+    console.log(categories);
+    return categories;
+  }
+
   render() {
     const products = this.state.filteredProducts.map((product) => {
       // console.log(product);
@@ -167,9 +206,14 @@ class ProductsView extends React.Component {
 
     return (
       <div>
-        <CategoriesView parentHandler={this.handleCategories} />
-
-        <Search parentHandler={this.handleSearch} />
+        <CategoriesView
+          parentHandler={this.handleCategories}
+          categories_from_products={this.state.categories}
+        />
+        <Search
+          parentHandler={this.handleSearch}
+          categories={this.state.categories}
+        />
 
         <div className="row">
           {UserStore.isAdmin && (
