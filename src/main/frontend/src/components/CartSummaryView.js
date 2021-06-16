@@ -96,7 +96,7 @@ class CartSummaryView extends React.Component {
         Authorization: token,
       },
     });
-    const response = await authAxios.delete("cart/", {
+    await authAxios.delete("cart/", {
       params: { userid: decodedToken["user-id"] },
     });
 
