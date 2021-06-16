@@ -39,9 +39,7 @@ class Product extends React.Component {
         );
         // console.log(response);
         this.setState({ amountToCart: 0 });
-        alert(
-          `Dodano do koszyka ${this.props.product.name} w ilości ${this.state.amountToCart} `
-        );
+        alert(`Dodano produkt do koszyka.`);
       } catch (err) {
         console.warn(err);
         alert("Nie udało się dodać produktu do koszyka");
