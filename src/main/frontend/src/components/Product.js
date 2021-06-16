@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 import { decodeToken } from "react-jwt";
 import UserStore from "../stores/UserStore";
+import ProductImage from "./ProductImage";
 
 class Product extends React.Component {
   constructor(props) {
@@ -66,11 +67,7 @@ class Product extends React.Component {
       <div className="col-lg-4 col-md-6 mb-4">
         <div className="card h-100">
           <span>
-            <img
-              className="card-img-top"
-              src="http://placehold.it/700x400"
-              alt=""
-            />
+            <ProductImage productId={this.props.product.id}></ProductImage>
           </span>
           <div className="card-body">
             <h1 className="card-title">
