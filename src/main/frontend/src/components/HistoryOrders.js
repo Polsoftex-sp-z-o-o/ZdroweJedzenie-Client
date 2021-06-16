@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { decodeToken } from "react-jwt";
 import UserStore from "../stores/UserStore";
 import axios from "axios";
+import { DateTime } from 'luxon';
 
 class HistoryProduct extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class HistoryItem extends React.Component {
   }
 
   getProductQuantity(id) {
-    return this.state.products.find((element) => element.id === id).quantity;
+    return this.state.products.find((element) => element.productId === id).quantity;
   }
 
   async getProduct(id) {
@@ -81,7 +82,7 @@ class HistoryItem extends React.Component {
 
   render() {
     this.state.products.forEach((element) => {
-      this.getProduct(element.id);
+      this.getProduct(element.productId);
     });
 
     if (this.state.isLoading === true) {
@@ -97,10 +98,15 @@ class HistoryItem extends React.Component {
       />
     ));
 
+    const groupDateDisplayFormat = "dd-MM-yyyy";
+    const groupTimeDisplayFormat = "hh:mm:ss";
+    const placementDate = DateTime.fromISO(this.state.date).toFormat(groupDateDisplayFormat);
+    const placementTime = DateTime.fromISO(this.state.date).toFormat(groupTimeDisplayFormat);
+
     return (
       <div className="history_item">
         <div>
-          <div className="history_item_date">{this.state.date}</div>
+          <div className="history_item_date"><b>{placementDate}</b>{", " + placementTime}</div>
         </div>
         <div>{products}</div>
         <div>
@@ -117,42 +123,12 @@ class HistoryOrders extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //zamockowane
-      orders: [
-        {
-          id: "asdlfkj",
-          date: "21-05-2021",
-          products: [
-            {
-              id: "1f0ccf58-a390-4aab-af22-439e354d7f50",
-              quantity: 1,
-            },
-            {
-              id: "6b8a8951-e174-4d6a-b579-ac572e91e9a6",
-              quantity: 2,
-            },
-          ],
-        },
-        {
-          id: "qpowfij",
-          date: "24-05-2021",
-          products: [
-            {
-              id: "7607655c-2cb2-46b7-a4ef-5705d117a736",
-              quantity: 1,
-            },
-            {
-              id: "77372d83-041a-43b6-933a-9d2df61a182c",
-              quantity: 1,
-            },
-          ],
-        },
-      ],
+      orders: []
     };
   }
 
   componentDidMount() {
-    //this.getHistoryOrders();
+    this.getHistoryOrders();
   }
 
   async getHistoryOrders() {
@@ -174,7 +150,13 @@ class HistoryOrders extends React.Component {
         params: { userid: decodedToken["user-id"] },
       });
 
+      console.log("history")
       console.log(response.data);
+
+      this.setState({
+        orders: response.data
+      })
+
     } catch (err) {
       console.warn(err);
       alert("Nie udało się załadować historii");
@@ -183,7 +165,8 @@ class HistoryOrders extends React.Component {
 
   render() {
     const orders = this.state.orders.map((order) => (
-      <HistoryItem key={order.id} date={order.date} products={order.products} />
+      <HistoryItem key={order.id} date={order.placementDate} products={order.orderedProducts} />
+      //<p key>test</p>
     ));
 
     return <div className="history_orders">{orders}</div>;
