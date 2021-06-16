@@ -69,10 +69,11 @@ class ProductsView extends React.Component {
         { "Content-Type": "application/json" }
       );
       //const newProducts = response.data;
-
+      
       console.log(response.data);
       this.setState({
         categories: response.data,
+
       });
       // this.setState({
       //   ...this.state,
@@ -85,6 +86,7 @@ class ProductsView extends React.Component {
       console.warn(err);
       alert("Nie udało się załadować produktów");
     }
+
   }
 
   handleInput(e) {
@@ -179,6 +181,7 @@ class ProductsView extends React.Component {
       if (!categories.includes(product.category))
         categories.push(product.category);
     });
+    
     console.log("KATEGORIE");
     console.log(categories);
     return categories;
@@ -221,6 +224,7 @@ class ProductsView extends React.Component {
           )}
           {products}
         </div>
+
       </div>
     );
   }
