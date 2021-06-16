@@ -33,8 +33,10 @@ class LoginView extends React.Component {
       .then((response) => {
         let token = response.data;
         const decodedToken = decodeToken(token);
-
-        // console.log(decodedToken);
+        const isAdmin =
+          decodedToken["authorities"] &&
+          decodedToken["authorities"].includes("ROLE_ADMIN");
+        console.log(isAdmin);
 
         runInAction(() => {
           UserStore.isLoggedIn = true;
@@ -42,9 +44,10 @@ class LoginView extends React.Component {
           UserStore.firstname = decodedToken["first-name"];
           UserStore.lastName = decodedToken["last-name"];
           UserStore.token = token;
-          UserStore.authorities = decodedToken["authorities"];
+          // UserStore.authorities = ;
+          UserStore.isAdmin = isAdmin;
           UserStore.save();
-          // console.log(UserStore);
+          console.log(UserStore);
         });
 
         console.log("logged in");
