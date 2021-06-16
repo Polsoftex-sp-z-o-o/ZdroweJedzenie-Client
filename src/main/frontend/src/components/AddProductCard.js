@@ -82,10 +82,12 @@ class AddProductCard extends React.Component {
           </span>
           <div className="card-body">
             <h1 className="card-title">
-              <span className="badge  rounded-pill bg-success">
-                {" "}
-                Edytuj kategorie{" "}
-              </span>{" "}
+              <input
+                type="text"
+                placeholder="Kategoria"
+                onChange={() => {}}
+                className="col-md-6 rounded-pill bg-success"
+              />
               <span> Edytuj nazwe produktu</span>
             </h1>
             <h5> Edytuj cene</h5>
@@ -93,7 +95,7 @@ class AddProductCard extends React.Component {
           </div>
           <div className="card-footer d-flex align-items-center justify-content-between">
             <small className="col-md-3 text-muted"> Edytuj ilość</small>
-            <div className="col-md-4 justify-content-around">
+            <div className="col-md-6 justify-content-around">
               <input
                 type="number"
                 min="0"
@@ -102,14 +104,10 @@ class AddProductCard extends React.Component {
                 step="1"
                 value="1"
                 onChange={() => {}}
-                className="col-md-6 p-0"
+                className="col-md-4 p-0"
               />
-              <button
-                id="buyButton"
-                key="buyButton"
-                className="col-md-4 btn btn-info"
-              >
-                <i className="fas fa-shopping-cart"></i>
+              <button id="save" key="save" className="col-md-4 btn btn-info">
+                save
               </button>
             </div>
           </div>
