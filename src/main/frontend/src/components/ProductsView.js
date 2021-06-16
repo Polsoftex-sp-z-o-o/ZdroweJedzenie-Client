@@ -30,7 +30,7 @@ class ProductsView extends React.Component {
   async getProducts() {
     try {
       const response = await axios.get(
-        "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/products/",
+        "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/products/",
         null,
         { "Content-Type": "application/json" }
       );

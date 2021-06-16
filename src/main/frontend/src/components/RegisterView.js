@@ -68,12 +68,12 @@ class RegisterView extends React.Component {
     //   });
 
     const headers = {
-      'Content-Type':'application/json',
-    }
+      "Content-Type": "application/json",
+    };
 
     axios
       .post(
-        "http://zdrowejedzenie.bcb17b143e9244b5a03d.eastus.aksapp.io/gateway/users/",
+        "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/users/",
         {
           email: state.email,
           address: state.address,
@@ -96,8 +96,8 @@ class RegisterView extends React.Component {
     if (this.state.password !== this.state.passwordConfirmation) {
       alert("Podane przez Ciebie hasła nie są jednakowe.");
     } else {
-      this.createUser(this.state)
-      this.props.history.push('/login');
+      this.createUser(this.state);
+      this.props.history.push("/login");
     }
   }
 
