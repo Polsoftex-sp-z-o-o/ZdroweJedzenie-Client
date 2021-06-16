@@ -131,7 +131,8 @@ class ProductsView extends React.Component {
     }
 
     const fuse = new Fuse(candidates, {
-      keys: ["name", "description"],
+      keys: [{name: "name", weight: 0.7}, {name: "description", weight: 0.3}],
+      threshold: 0.4
     });
     const result = fuse.search(query);
     const output = [];
