@@ -85,26 +85,28 @@ class Product extends React.Component {
               {" "}
               Pozostało: {this.props.product.quantity}
             </small>
-            <div className="col-md-4 justify-content-around">
-              <input
-                type="number"
-                min="0"
-                max={this.props.product.quantity}
-                size="7"
-                step="1"
-                value={this.state.amountToCart}
-                onChange={this.handleCartInput.bind(this)}
-                className="col-md-6 p-0"
-              />
-              <button
-                id="buyButton"
-                key="buyButton"
-                onClick={this.addToCart.bind(this)}
-                className="col-md-4 btn btn-info"
-              >
-                <i className="fas fa-shopping-cart"></i>
-              </button>
-            </div>
+            {UserStore.isLoggedIn && (
+              <div className="col-md-4 justify-content-around">
+                <input
+                  type="number"
+                  min="0"
+                  max={this.props.product.quantity}
+                  size="7"
+                  step="1"
+                  value={this.state.amountToCart}
+                  onChange={this.handleCartInput.bind(this)}
+                  className="col-md-6 p-0"
+                />
+                <button
+                  id="buyButton"
+                  key="buyButton"
+                  onClick={this.addToCart.bind(this)}
+                  className="col-md-4 btn btn-info"
+                >
+                  <i className="fas fa-shopping-cart"></i>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
