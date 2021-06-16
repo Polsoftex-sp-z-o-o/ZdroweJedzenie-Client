@@ -3,15 +3,13 @@ import { Link } from "react-router-dom";
 import UserStore from "../stores/UserStore";
 import { observer } from "mobx-react";
 
-
 class Navigation extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.doLogout = this.doLogout.bind(this);
   }
 
   doLogout() {
-
     console.log("logout");
     UserStore.clear();
     window.location.reload();
@@ -28,20 +26,26 @@ class Navigation extends React.Component {
         </li>
       </Link>
     );
-    if(UserStore.isLoggedIn){
+    if (UserStore.isLoggedIn) {
       leftMenuLinks.push(
         <Link key="account" to="/account">
-          <li className="nav-item active" style={{ margin: "0px 10px 0px 10px" }}>
+          <li
+            className="nav-item active"
+            style={{ margin: "0px 10px 0px 10px" }}
+          >
             <span className="nav-link"> Moje konto</span>
           </li>
         </Link>
       );
     }
 
-    if(UserStore.isLoggedIn){
+    if (UserStore.isLoggedIn) {
       leftMenuLinks.push(
         <Link key="cart" to="/cart">
-          <li className="nav-item active" style={{ margin: "0px 10px 0px 10px" }}>
+          <li
+            className="nav-item active"
+            style={{ margin: "0px 10px 0px 10px" }}
+          >
             <span className="nav-link">Koszyk</span>
           </li>
         </Link>
@@ -50,21 +54,21 @@ class Navigation extends React.Component {
 
     const rightMenuLinks = [];
 
-    if(UserStore.isLoggedIn === false){
-    rightMenuLinks.push(
-      <Link key="register" to="/register">
-        <li
-          key="register"
-          className="nav-item active"
-          style={{ margin: "0px 10px 0px 10px" }}
-        >
-          <button href="/register" className="btn btn-outline-warning">
-            Zarejestruj
-          </button>
-        </li>
-      </Link>
-    );
-    
+    if (UserStore.isLoggedIn === false || UserStore.isLoggedIn === null) {
+      rightMenuLinks.push(
+        <Link key="register" to="/register">
+          <li
+            key="register"
+            className="nav-item active"
+            style={{ margin: "0px 10px 0px 10px" }}
+          >
+            <button href="/register" className="btn btn-outline-warning">
+              Zarejestruj
+            </button>
+          </li>
+        </Link>
+      );
+
       rightMenuLinks.push(
         <Link key="login" to="/login">
           <li
@@ -78,7 +82,7 @@ class Navigation extends React.Component {
           </li>
         </Link>
       );
-    }else {
+    } else {
       rightMenuLinks.push(
         <Link key="logout" to="/logout">
           <li
@@ -86,7 +90,11 @@ class Navigation extends React.Component {
             className="nav-item active"
             style={{ margin: "0px 10px 0px 10px" }}
           >
-            <button href="/logout" className="btn btn-outline-danger" onClick={this.doLogout}>
+            <button
+              href="/logout"
+              className="btn btn-outline-danger"
+              onClick={this.doLogout}
+            >
               Wyloguj
             </button>
           </li>
