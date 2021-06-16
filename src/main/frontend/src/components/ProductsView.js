@@ -153,10 +153,11 @@ class ProductsView extends React.Component {
     return (
       <div>
         <CategoriesView parentHandler={this.handleCategories} />
+
         <Search parentHandler={this.handleSearch} />
 
         <div className="row">
-          <AddProductCard />
+          {this.state.isAdmin && <AddProductCard />}
           {products}
         </div>
       </div>
@@ -164,4 +165,4 @@ class ProductsView extends React.Component {
   }
 }
 
-export default ProductsView;
+export default observer(ProductsView);

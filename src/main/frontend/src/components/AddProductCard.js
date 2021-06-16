@@ -4,11 +4,14 @@ class AddProductCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 0,
+      quantity: 0,
       category: "",
       name: "",
+      price: 0,
+      description: "",
     };
   }
+
   // async addNewProduct() {
   //   //TO DO
   //   if (this.state.amountToCart > 0) {
@@ -24,7 +27,7 @@ class AddProductCard extends React.Component {
   //         },
   //       });
   //       const response = await authAxios.post(
-  //         "cart/",
+  //         "products/",
   //         {
   //           productId: this.props.product.id,
   //           quantity: this.state.amountToCart,
@@ -46,28 +49,34 @@ class AddProductCard extends React.Component {
   //   }
   // }
 
-  // handleNameInput(e) {
-  //   const amountToCartCurrent = e.target.validity.valid
-  //     ? e.target.value
-  //     : this.state.amountToCart;
-  //   this.setState({ amountToCart: amountToCartCurrent });
-  // }
+  handleCategoryInput(e) {
+    const categoryValue = e.target.value;
+    this.setState({ category: categoryValue });
+  }
 
-  // handleCategoryInput(e) {
-  //   const amountToCartCurrent = e.target.validity.valid
-  //     ? e.target.value
-  //     : this.state.amountToCart;
-  //   this.setState({ amountToCart: amountToCartCurrent });
-  // }
+  handleNameInput(e) {
+    const nameValue = e.target.value;
+    this.setState({ name: nameValue });
+  }
 
-  // handleAmountInput(e) {
-  //   const amountToCartCurrent = e.target.validity.valid
-  //     ? e.target.value
-  //     : this.state.amountToCart;
-  //   this.setState({ amountToCart: amountToCartCurrent });
-  // }
+  handlePriceInput(e) {
+    const priceCurrent = e.target.validity.valid
+      ? e.target.value
+      : this.state.price;
+    this.setState({ price: priceCurrent });
+  }
 
-  handleDelete() {}
+  handleDescriptionInput(e) {
+    const descriptionValue = e.target.value;
+    this.setState({ description: descriptionValue });
+  }
+
+  handleQuantityInput(e) {
+    const quantityCurrent = e.target.validity.valid
+      ? e.target.value
+      : this.state.quantity;
+    this.setState({ quantity: quantityCurrent });
+  }
 
   render() {
     return (
@@ -80,30 +89,57 @@ class AddProductCard extends React.Component {
               alt=""
             />
           </span>
-          <div className="card-body">
+          <div className="card-body d-flex flex-column">
             <h1 className="card-title">
               <input
                 type="text"
                 placeholder="Kategoria"
-                onChange={() => {}}
+                value={this.state.category}
+                onChange={this.handleCategoryInput.bind(this)}
                 className="col-md-6 rounded-pill bg-success"
               />
-              <span> Edytuj nazwe produktu</span>
+              <input
+                type="text"
+                placeholder="Nazwa produktu"
+                value={this.state.name}
+                onChange={this.handleNameInput.bind(this)}
+                className=""
+              />
             </h1>
-            <h5> Edytuj cene</h5>
-            <p className="card-text"> Type description </p>
+            <div className="d-flex flex-row ">
+              <label>Cena</label>
+              <h5>
+                {" "}
+                <input
+                  type="number"
+                  min="0"
+                  size="7"
+                  step="1"
+                  value={this.state.price}
+                  onChange={this.handlePriceInput.bind(this)}
+                  className="col-md-6 p-0"
+                />
+              </h5>
+            </div>
+
+            <input
+              type="text"
+              placeholder="Opis produkntu"
+              value={this.state.description}
+              onChange={this.handleDescriptionInput.bind(this)}
+              className=""
+            />
           </div>
           <div className="card-footer d-flex align-items-center justify-content-between">
-            <small className="col-md-3 text-muted"> Edytuj ilość</small>
+            <small className="col-md-3 text-muted"> Dostępna ilość</small>
             <div className="col-md-6 justify-content-around">
               <input
                 type="number"
                 min="0"
-                max="1000"
                 size="7"
                 step="1"
-                value="1"
-                onChange={() => {}}
+                value={this.state.quantity}
+                onChange={this.handleQuantityInput.bind(this)}
                 className="col-md-4 p-0"
               />
               <button id="save" key="save" className="col-md-4 btn btn-info">

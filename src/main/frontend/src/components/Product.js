@@ -55,8 +55,6 @@ class Product extends React.Component {
     this.setState({ amountToCart: amountToCartCurrent });
   }
 
-  handleDelete() {}
-
   componentDidMount() {
     this.loadCategories();
   }
