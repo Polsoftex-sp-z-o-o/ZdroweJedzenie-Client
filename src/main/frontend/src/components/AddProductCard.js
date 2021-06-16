@@ -1,4 +1,8 @@
 import React from "react";
+import axios from "axios";
+import { observer } from "mobx-react";
+import { decodeToken } from "react-jwt";
+import UserStore from "../stores/UserStore";
 
 class AddProductCard extends React.Component {
   constructor(props) {
@@ -12,42 +16,48 @@ class AddProductCard extends React.Component {
     };
   }
 
-  // async addNewProduct() {
-  //   //TO DO
-  //   if (this.state.amountToCart > 0) {
-  //     try {
-  //       const apiURL =
-  //         "http://zdrowejedzenie.fe6a0d090dd54915b798.eastus.aksapp.io/gateway/";
-  //       const token = UserStore.token;
-  //       const decodedToken = decodeToken(token);
-  //       const authAxios = axios.create({
-  //         baseURL: apiURL,
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       });
-  //       const response = await authAxios.post(
-  //         "products/",
-  //         {
-  //           productId: this.props.product.id,
-  //           quantity: this.state.amountToCart,
-  //         },
-  //         {
-  //           "Content-Type": "application/json",
-  //           params: { userid: decodedToken["user-id"] },
-  //         }
-  //       );
-  //       // console.log(response);
-  //       this.setState({ amountToCart: 0 });
-  //       alert(
-  //         `Dodano do koszyka ${this.props.product.name} w ilości ${this.state.amountToCart} `
-  //       );
-  //     } catch (err) {
-  //       console.warn(err);
-  //       alert("Nie udało się dodać produktu do koszyka");
-  //     }
-  //   }
-  // }
+  async addNewProduct() {
+    //TO DO
+    try {
+      const apiURL =
+        "http://zdrowejedzenie.44b0bdc6651241b0874a.eastus.aksapp.io/gateway/";
+      const token = UserStore.token;
+      const decodedToken = decodeToken(token);
+      const authAxios = axios.create({
+        baseURL: apiURL,
+        headers: {
+          Authorization: token,
+        },
+      });
+      const response = await authAxios.post(
+        "products/",
+        {
+          name: this.state.name,
+          description: this.state.description,
+          category: this.state.category,
+          quantity: this.state.quantity,
+          price: this.state.price,
+        },
+        {
+          "Content-Type": "application/json",
+          // params: { userid: decodedToken["user-id"] },
+        }
+      );
+      console.log(response);
+      this.props.reload();
+      this.setState({
+        quantity: 0,
+        category: "",
+        name: "",
+        price: 0,
+        description: "",
+      });
+      alert(`Dodano nowy produkt `);
+    } catch (err) {
+      console.warn(err);
+      alert("Nie udało się dodać nowego produktu");
+    }
+  }
 
   handleCategoryInput(e) {
     const categoryValue = e.target.value;
@@ -142,7 +152,12 @@ class AddProductCard extends React.Component {
                 onChange={this.handleQuantityInput.bind(this)}
                 className="col-md-4 p-0"
               />
-              <button id="save" key="save" className="col-md-4 btn btn-info">
+              <button
+                id="save"
+                key="save"
+                className="col-md-4 btn btn-info"
+                onClick={this.addNewProduct.bind(this)}
+              >
                 save
               </button>
             </div>
@@ -153,4 +168,4 @@ class AddProductCard extends React.Component {
   }
 }
 
-export default AddProductCard;
+export default observer(AddProductCard);

@@ -19,21 +19,26 @@ class ProductsView extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleCategories = this.handleCategories.bind(this);
-    // console.log(UserStore.authorities);
-    const isAdmin =
-      UserStore.authorities && UserStore.authorities.includes("ROLE_ADMIN");
+    console.log(UserStore.isAdmin);
+    // const isAdmin =
+    //   UserStore.authorities && UserStore.authorities.includes("ROLE_ADMIN");
     // console.log("Czy to admin", isAdmin);
 
     this.state = {
       products: [],
       filteredProducts: [],
-      isAdmin: isAdmin,
+      toogleRefresh: false,
+      // isAdmin: isAdmin,
     };
   }
 
   componentDidMount() {
     this.getProducts();
   }
+
+  // refreshProducts() {
+  //   this.setState({ toogleRefresh: true });
+  // }
 
   async getProducts() {
     try {
@@ -139,7 +144,6 @@ class ProductsView extends React.Component {
   }
 
   render() {
-    // this.state.isAdmin && {};
     const products = this.state.filteredProducts.map((product) => (
       <Product
         key={product.id}
@@ -157,7 +161,9 @@ class ProductsView extends React.Component {
         <Search parentHandler={this.handleSearch} />
 
         <div className="row">
-          {this.state.isAdmin && <AddProductCard />}
+          {UserStore.isAdmin && (
+            <AddProductCard reload={this.getProducts.bind(this)} />
+          )}
           {products}
         </div>
       </div>
