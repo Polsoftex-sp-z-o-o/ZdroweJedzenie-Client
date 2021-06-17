@@ -209,7 +209,7 @@ class AddProductCard extends React.Component {
                   type="number"
                   min="0"
                   size="7"
-                  step="0.1"
+                  step="0.01"
                   value={this.state.price}
                   onChange={this.handlePriceInput.bind(this)}
                   className="col-md-6 p-0"
