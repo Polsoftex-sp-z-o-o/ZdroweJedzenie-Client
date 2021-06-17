@@ -26,7 +26,7 @@ class Navigation extends React.Component {
         </li>
       </Link>
     );
-    if (UserStore.isLoggedIn) {
+    if (UserStore.isLoggedIn && !UserStore.isAdmin) {
       leftMenuLinks.push(
         <Link key="account" to="/account">
           <li
@@ -39,7 +39,7 @@ class Navigation extends React.Component {
       );
     }
 
-    if (UserStore.isLoggedIn) {
+    if (UserStore.isLoggedIn && !UserStore.isAdmin) {
       leftMenuLinks.push(
         <Link key="cart" to="/cart">
           <li
